@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="div">
+    <button id="btn1" style="color:orange;background-color:green">按钮1</button><br><br><br>
+    <button type="button" name="button" id="btn2" style="color:grey;background-color:yellow">按钮2</button><br><br><br>
+    <button type="button" name="button" id="btn3" style="color:blue;background-color:orange">按钮3</button><br><br><br>
+
+    <button id="btn4">按钮4</button>
+    <a href="http://www.jikexueyuan.com" id="aid">极客学院</a>
+  </div>
+  <script type="text/javascript">
+    var btn1 = document.getElementById('btn1');
+    btn1.onclick = function () {alert("Hello DOM0级事件处理程序1")};
+    btn1.onclick = function () {alert("Hello Dom0级事件处理程序2")};
+    btn1.onclick = function () {alert("Hello Dom0级事件处理程序3")};
+    //btn1.onclick = null;
+
+    var btn2 = document.getElementById('btn2');
+    btn2.addEventListener("click",demo1);
+    btn2.addEventListener("click",demo2);
+    btn2.addEventListener("click",demo3);
+    function demo1() {
+      alert("Dom2级事件处理程序1")
+    }
+    function demo2() {
+      alert("Dom2级事件处理程序2")
+    }
+    function demo3() {
+      alert("Dom2级事件处理程序3")
+    }
+
+    var btn3 = document.getElementById('btn3');
+    if (btn3.addEventListener) {
+      btn3.addEventListener('click',demo);
+    } else if (btn3.attachEvent) {
+      //IE8
+      btn3.attachEvent("click",demo);
+    } else {
+      btn3.onclick = demo();
+    }
+    function demo() {
+      alert("dom 0级处理事件")
+    }
+
+
+    var btn4 = document.getElementById('btn4').addEventListener("click",showType);
+    var div = document.getElementById('div').addEventListener("click",showDiv);
+    document.getElementById("aid").addEventListener("click",showA);
+    function showType(event) {
+      //alert(event.type);
+      alert(event.target);
+      //阻止事件冒泡,否则div的事件也触发了
+      event.stopPropagation();
+    }
+    function showDiv(event){
+      alert("DIV");
+    }
+    function showA(event) {
+      event.stopPropagation();
+      event.preventDefault();//阻止跳转
+    }
+
+  </script>
+  <!-- header+main+footer -->
+  <header></header>
+  <main>
+    <!-- table>(thead>tr>th*5)(tbody>tr>td*5) -->
+    <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Hello World!</td>
+        <td>Hello World!</td>
+        <td>Hello World!</td>
+        <td>Hello World!</td>
+        <td>Hello World!</td>
+      </tr>
+    </tbody>
+  </table>
+  </main>
+  <!-- nav>ul>(li>a[href=#]{Link})*5 -->
+  <nav>
+    <ul>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+      <li><a href="#">Link</a></li>
+    </ul>
+  </nav>
+  <footer></footer>
+</body>
+</html>

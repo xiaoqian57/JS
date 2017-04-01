@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>标准对象</title>
+    <script>
+        console.log(typeof 123); //number
+        console.log(typeof NaN); //number
+        console.log(typeof 'str'); //string
+        console.log(typeof true); //boolean
+        console.log(typeof undefined); //undefined
+        console.log(typeof Math.abs); //function
+        console.log(typeof null); //object
+        console.log(typeof []); //object
+        console.log(typeof {}); //object
+
+        //javascript中，字符串也区分string类型和它的包装类型，包装对象用new创建
+        var n = new Number(123); //123,生成了新的包装类型
+        var b = new Boolean(true); //true,生成了新的包装类型
+        var s = new String('str'); //'str'，生成了新的包装类型
+        console.log(new Number(123) === 123); //false
+        console.log(new Boolean(true) === true); //false
+        console.log(new String('str') === 'str'); //false
+        console.log(new String('str') == 'str'); //true
+        /*尽量不要使用包装对象，尤其string类型*/
+
+        console.log(Number('123')); //123 相当于parseInt(0 parseFloat()
+        console.log(Boolean('true')); //true
+        console.log(Boolean('false')); //true 因为它是非空字符串
+        console.log(Boolean('')); //false
+        console.log(String(123.45)); // '123.45' string类型
+
+        //判断Array要用Array.isArray(arr)
+        //判断null要用myVar === null
+        //判断某个全局变量是否存在用 typeof window.myVar === 'undefined'
+        //函数内部判断某个变量是否存在用 typeof myVar === 'undefined'
+
+        //number对象调用toString()报SyntaxError
+        //应该如下处理：
+        123..toString(); //'123'
+        (123).toString(); //'123'
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

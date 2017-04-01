@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>N ways reverse</title>
+  </head>
+  <script>
+    var str = "Hello World!";
+    function reverse1(s) {
+      var o = '';
+      for (var i = s.length - 1; i >= 0; i--) {
+        o += s[i];
+      }
+      return o;
+    }
+
+    function reverse2(s) {
+      var o = [];
+      for (var i = s.length - 1, j = 0; i >= 0; i--, j++) {
+        o[j] = s[i];
+      }
+      return o.join('');
+    }
+
+    function reverse3(s) {
+      var o = [];
+      for (var i = 0, len = s.length; i < len; i++) {
+        o.push(s.charAt(len - i));
+      }
+      return o.join('');
+    }
+
+    function reverse4(s) {
+      return s.split('').reverse().join('');
+    }
+
+    function reverse5(s) {
+      var i = s.length, o = '';
+      while(i > 0) {
+        o += s.substring(i - 1, i);
+        i--;
+      }
+      return o;
+    }
+
+    function reverse6(s) {
+      var o = '';
+      for (var i = s.length - 1; i >= 0; o += s[i--]) {
+
+      }
+      return o;
+    }
+
+    function reverse7(s) {
+      return (s === '') ? '' : reverse7(s.substring(1)) + s.charAt(0);
+    }
+
+    function reverse8(s) {
+      function rev(s, len, o) {
+        return (len === 0) ? o : rev(s, --len, (o += s[len]) );
+      }
+      return rev(s, s.length, '');
+    }
+
+    function reverse9(s) {
+      s = s.split('');
+     var len = s.length,
+     halfIndex = Math.floor(len / 2) - 1,
+     tmp;
+     for (var i = 0; i <= halfIndex; i++) {
+       tmp = s[len - i - 1];
+       s[len - i - 1] = s[i];
+       s[i] = tmp;
+     }
+     return s.join('');
+    }
+
+    function reverse10(s) {
+      if (s.length < 2)
+        return s;
+      var halfIndex = Math.ceil(s.length / 2);
+      return reverse10(s.substr(halfIndex)) + reverse10(s.substr(0, halfIndex));
+    }
+
+    var content = reverse10(str);
+    console.log(str + ' ' +content);
+    
+  </script>
+  <body>
+
+  </body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        for(let i = 0; i < 10; i++){
+            console.log(i); // 0 1 2 3 4 5 6 7 8 9
+        }
+        //console.log(i);// i is not defined
+
+        var a = [];
+        for(var i = 0; i < 10; i++){
+            a[i] = function() {
+                console.log("全局变量i:"+i);
+            };
+        }
+        console.log(a[6]()); // undefined
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

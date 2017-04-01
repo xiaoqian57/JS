@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>generator</title>
+    <script>
+        //函数在执行过程中，如果没有return，就默认return undefined，控制权就无法交回被调用的代码
+        //generator可以返回多次函数
+        function* foo(x) {
+            yield x + 1;
+            yield x + 2;
+            return x + 3;
+        }
+
+        //函数只能返回一次，所以返回一个数组
+        function fib(max) {
+            var t,
+                a = 0,
+                b = 1,
+                arr = [0,1];
+            while (arr.length < max) {
+                t = a + b;
+                a = b;
+                b = t;
+                arr.push(t);
+            }
+            return arr;
+        }
+        console.log(fib(5)); //[ 0, 1, 1, 2, 3 ]
+        console.log(fib(10)); //[ 0, 1, 1, 2, 3, 5, 8, 13, 21, 34 ]
+
+        //换成generator，就能一次返回一个数，不断返回多次
+        function* fib2() {
+            var t,
+                a = 0,
+                b = 1,
+                n = 1;
+            while (n < max) {
+                yield a;
+                t = a + b;
+                a = b;
+                b = t;
+                n ++;
+            }
+            return a;
+        }
+
+        var f = fib(5);
+        f.next(); // {value: 0, done: false}
+        f.next(); // {value: 1, done: false}
+        f.next(); // {value: 1, done: false}
+        f.next(); // {value: 2, done: false}
+        f.next(); // {value: 3, done: true}
+        /*
+        * next()方法会执行generator的方法，然后，每次遇到yield x, 就返回一个对象{value:x, done: true/false},然后暂停，
+        * */
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

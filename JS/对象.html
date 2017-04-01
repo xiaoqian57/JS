@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对象学习</title>
+    <script>
+        var xiaohong = {
+            name: '小红',
+            birth: 1990,
+            //带有特殊符号的属性必须加''
+            'middle-school': 'No.1 middle school',
+            score: null
+        };
+        //属性名尽量使用标准变量名，这样就可直接通过object.prop形式访问一个属性了
+        console.log(xiaohong.name); //小红
+        //访问带有特殊字符的属性必须是这种形式
+        console.log(xiaohong['middle-school']); //No.1 middle school
+        //返回不存在的属性
+        console.log(xiaohong.age); //undefined
+        //自由的添加或删除属性
+        xiaohong.age = 18;
+        console.log(xiaohong.age); //18
+        delete xiaohong.age;
+        console.log(xiaohong.age); //undefined
+        //in检测是否拥有某一属性
+        console.log('name' in xiaohong); //true
+        console.log('grade' in xiaohong); //false
+        //in 判断是否属性存在，但属性不一定是xiaohong的，可能是继承来的
+        console.log('toString' in xiaohong); //true
+        // 因为toString定义在object对象中，而所有对象最终都会在原型链上指向object，所以xiaoming也拥有toString属性。
+        //要判断一个属性是否是xiaohong自身拥有的，而不是继承得到的，可以用hasOwnProperty()方法：
+        console.log(xiaohong.hasOwnProperty('name')); //true
+        console.log(xiaohong.hasOwnProperty('toString')); //false
+    </script>
+</head>
+<body>
+
+</body>
+</html>

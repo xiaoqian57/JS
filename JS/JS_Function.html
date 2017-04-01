@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function f1() {
+//           var n = 999; //这是局部变量, 外部调用时会报 n is not defined
+            n = 998; // 全局变量
+        }
+        f1();
+        console.log(n);
+
+        function f2() {
+            var n = 999;
+            nAdd = function(){
+                n += 1;
+            };
+            function f3() {
+                console.log(n);
+            }
+            return f3;
+        }
+        var result = f2();
+        result(); // 999
+        nAdd();
+        result(); // 1000
+
+        /*闭包作用域*/
+        var name = "The Window";
+        var object1 = {
+            name: "My Object1",
+            getNameFunc: function () {
+                return function () {
+                    return this.name;
+                };
+            }
+        };
+        var object2 = {
+            name: "My Object2",
+            getNameFunc: function () {
+                var that = this;
+                return function () {
+                    return that.name;
+                };
+            }
+        };
+        console.log(object1.getNameFunc()()); //The Window
+        console.log(object2.getNameFunc()()); //My Object2
+
+        function foo1(x) {
+            var tmp = 3;
+            function bar(y) {
+                console.log(x + y + (++tmp)); //16
+            }
+            bar(10);
+        }
+        console.log(foo1(2)); //undefined
+        function foo2(x) {
+            var tmp = 3;
+            return function(y) {
+                console.log(x + y + (++tmp));
+            }
+        }
+        var bar = foo2(2);  //bar现在是一个闭包
+        console.log(bar(10));
+
+        function fun(n, o) {
+            console.log(o);
+            return {
+                fun: function(m){
+                    return fun(m,n);
+                }
+            };
+        }
+        var a = fun(0);
+        console.log(a.fun(1)+","+a.fun(2)+","+a.fun(3));
+        console.log(fun(0).fun(1).fun(2).fun(3));
+        var c = fun(0).fun(1);
+        console.log(c.fun(2)+","+c.fun(3));
+
+        //获取数结构所有节点，用递归比较方便
+        function walkTree(node) {
+            if (node == null)
+                return;
+            // do something with node
+            for(let i = 0; i < node.childNodes.length; i++) {
+                walkTree(node.childNodes[i]);
+            }
+        }
+
+        //嵌套函数可以“继承”容器函数的参数和变量，也就是说内部函数包含外部函数的作用域,外部函数不能使用内部函数的参数和变量
+        function outside(x) {
+            function inside(y) {
+                return x + y;
+            }
+            return inside;
+        }
+        var fn_inside = outside(5);
+        console.log("fn_inside:"+fn_inside);
+        // 返回的是里面的闭包
+        //        function inside(y) {
+        //        return x + y;
+        //        }
+        console.log("inside:"+fn_inside(3));
+        console.log("一步到位:"+outside(5)(3));
+        console.log("里面的闭包不传参数："+outside(5)()); // NaN
+
+        function addSquares(a, b) {
+            function square(x) {
+                return x * x;
+            }
+            return square(a) + square(b);
+        }
+        console.log("2和3的平方和："+addSquares(2, 3));
+
+        var dog = function (name) {         //外部函数定义一个变量"name"
+            var getName = function() {
+                //内部函数可以访问外部函数定义的"name"
+                return name;
+            }
+            //返回这个内部函数，从而将其暴露在外部函数作用域
+            return getName;
+        };
+        var myDog = dog("Vivie");
+        console.log(myDog());            //返回结果"Vivie"
+
+        var createPet = function(name) {
+            var sex;
+            return {
+                setName: function (newName) {
+                    name = newName;
+                },
+                getName: function() {
+                    return name;
+                },
+                setSex: function(newSex) {
+                    if (typeof newSex == "string" && (newSex.toLowerCase() == "male" || newSex.toLowerCase() == "female")) {
+                        sex = newSex;
+                    }
+                },
+                getSex: function () {
+                    return sex;
+                }
+            }
+        }
+        var pet = createPet("guoqing");
+        console.log(pet.getName());     //guoqing
+        pet.setName("zhongqiu");
+        pet.setSex("male");
+        console.log("name: "+pet.getName()+"; sex: "+pet.getSex());     //name:zhongqiu; sex:male
+
+        //默认参数 default parameter
+        function multiply(a, b) {
+            b = typeof b != 'undefined' ? b : 1;
+            return a * b;
+        }
+        console.log(multiply(5));   //5
+        //参数默认值
+        function multiply2(a, b = 1) {
+            return a * b;
+        }
+        console.log(multiply2(6));  //6
+        //剩余参数 rest parameters
+        //使用剩余参数收集从第二个到最后参数。然后，我们将这个数组的每一个数与第一个参数相乘
+        function multiply3(multiplier, ...theArgs) {
+            return theArgs.map(x => multiplier * x);
+        }
+        console.log(multiply3(2, 1, 2, 3)); //[2,4,6]
+
+        var s = new String("foo");
+        console.log(s); //{ 0: 'f', 1: 'o', 2: 'o'}
+        console.log(typeof(s)); //object
+        console.log(eval("2+2"));   //4
+        console.log(eval(new String("2+2")));   //String:{0:'2',1:'+',2:'2'}
+
+        var str = 'abcdefghijk';
+        console.log("(-3,2):"+str.substr(-3,2));
+        var colors = ['red','green','blue',undefined];
+        colors.forEach(function (color) {
+            console.log(color); // red  green blue undefined
+        });
+        var myArr = new Array("1","2","3");
+        console.log(myArr.shift()+" 数组长度为："+myArr.length);
+
+        var a1 = ['a','b','c'];
+        console.log(a1.map(function (item) {
+            return item.toUpperCase();
+        }));
+
+        function makeIterator(array) {
+            var nextIndex = 0;
+            return {
+                next: function () {
+                    return nextIndex < array.length ?
+                        {value: array[nextIndex++], done: false} :
+                        {done: true};
+                }
+            }
+        }
+        let it = makeIterator(['yo', 'ya']);
+        console.log("value:"+it.next().value);   //yo
+        console.log("value:"+it.next().value);   //ya
+        console.log("done:"+it.next().done+" value:"+it.next().value);    //true
+
+        let langs = ['JavaScript', 'Python', 'C++'];
+        let it2 = Iterator(langs);
+        for(let pair in it2) {
+            console.log(pair);
+        } //chrome报错，ff上可以
+//        Array [ 0, "JavaScript" ]
+//        Array [ 1, "Python" ]
+//        Array [ 2, "C++" ]
+
+        //只遍历一个对象的key，把第二个参数设置为true
+        let it3 = Iterator(langs, true);
+        for(let key in it3) {
+            console.log(key);
+        }//chrome报错，Iterator未定义，ff上可以
+        // 0   1   2
+//        for(let [i, lang] in it2) {
+//            console.log(i+":  "+lang);
+//        }//无效果
+
+        function makePerson(firstName, lastName) {
+            return{
+                first: firstName,
+                last: lastName,
+                fullName: function () {
+                    return this.first + ' ' + this.last;
+                },
+                fullNameReversed: function () {
+                    return this.last + ', ' + this.first;
+                }
+            }
+        }
+        s = makePerson("Simon", "Willison");
+        console.log(s.fullName());
+        console.log(s.fullNameReversed());
+
+        let o = {
+            a: 1,
+            m: function() {
+                return this.a + 1;
+            }
+        };
+        //当调用了o.m时，'this'指向了o
+        console.log(o.m()); //2
+
+        let p = Object.create(o); // p是一个对象, p.[[Prototype]]是o.
+        p.a = 12;   //创建p的自身属性a
+        console.log(p.m()); //13
+        //调用p.m时，'this'指向了p
+        //又因为p继承o的m函数
+        //此时的this.a 即p.a,即p的自身属性'a'
+
+        function A(a) {
+            this.varA = a;
+        }
+        A.prototype = {
+            varA: null,
+            doSomething: function () {
+                
+            }
+        }
+        function B(a,b) {
+            A.call(this, a);
+            this.varB = b;
+        }
+        B.prototype = Object.create(A.prototype, {
+            varB: {
+                value: null,
+                enumerable: true,
+                configurable: true,
+                writable: true
+            },
+            doSomething: {
+                value: function() {
+                    A.prototype.doSomething.apply(this, arguments);
+                },
+                enumerable: true,
+                configurable: true,
+                writable: true
+            }
+        });
+        B.prototype.constructor = B;
+        var b = new B();
+        b.doSomething();
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>闭包</title>
+    <script>
+        //对Array求和
+        function sum(arr) {
+            return arr.reduce(function (x, y) {
+                return x + y;
+            });
+        }
+        console.log(sum([1,2,3,4,5])); //15
+        //如果不需要立刻求和，可以返回求和函数
+        function lazy_sum(arr) {
+            let sum = function () {
+                return arr.reduce(function (x, y) {
+                    return x + y;
+                });
+            };
+            return sum;
+        }
+        let f1 = lazy_sum([1,2,3,4,5,]);
+        console.log(f1); //function lazy_sum/sum()
+        console.log(f1()); //15
+        let f2 = lazy_sum([1,2,3,4,5]);
+        console.log(f1===f2); //false
+
+        function count() {
+            let arr = [];
+            for (var i = 1; i <= 3; i++) {
+                arr.push(function () {
+                    return i * i; //此i为函数级元素，等执行ff1()函数时执行return i*i,此时i=4
+                });
+            }
+            console.log("i:"+i);
+            return arr;
+        }
+        let results = count();
+        let ff1 = results[0];
+        let ff2 = results[1];
+        let ff3 = results[2];
+        console.log(results[0]); // function () {return i * i;}
+        console.log(results[1]); // function () {return i * i;}
+        console.log(results[2]); // function () {return i * i;}
+        console.log(ff1()); //16
+        console.log(ff2()); //16
+        console.log(ff3()); //16
+//      返回闭包时牢记的一点就是：返回函数不要引用任何循环变量，或者后续会发生变化的变量。
+
+        //改成块级作用域就能正常显示
+        function count2() {
+            let arr = [];
+            for (let i = 1; i <= 3; i++) {
+                arr.push(function () {
+                    return i * i; //此i为块级元素，所以每次函数执行时还是从i=1开始
+                });
+            }
+//            console.log("I:"+i); // i is not defined
+            return arr;
+        }
+        let results2 = count2();
+        let ff11 = results2[0];
+        let ff22 = results2[1];
+        let ff33 = results2[2];
+        console.log(ff11()); //1
+        console.log(ff22()); //4
+        console.log(ff33()); //9
+
+        //或者是再创建一个函数，用该函数的参数绑定循环变量当前的值，无论该循环变量后续如何更改，已绑定到函数参数的值不变：
+        function count3() {
+            var arr = [];
+            for (var i = 1; i <= 3; i++) {
+                arr.push((function (n) {
+                    return function () {
+                        return n * n;
+                    };
+                })(i)); //立即执行函数表达式，IIFE
+            }
+            return arr;
+        }
+        var results3 = count3();
+        var f11 = results3[0];
+        var f22 = results3[1];
+        var f33 = results3[2];
+        console.log(f11()); //1
+        console.log(results3[0]()); //1  这两种写法都行，本质都是执行这个函数
+        console.log(f22()); //4
+        console.log(f33()); //9
+        /*IIFE*/
+       (function (x) {
+            return x * x;
+        })(3);
+
+       //闭包，在没有class机制，只有函数的语言里，可以借助闭包封装私有变量，比如创建一个计数器：
+        function create_counter(initial) {
+            var x = initial || 0;
+            return {
+                inc: function () {
+                    x += 1;
+                    return x;
+                }
+            }
+        }
+        var c1 = create_counter();
+        console.log(c1.inc()); //1  若x = initial没有||0，NaN
+        console.log(c1.inc()); //2
+        console.log(c1.inc()); //2
+        var c2 = create_counter(10);
+        console.log(c2.inc()); //11
+        console.log(c2.inc()); //12
+        console.log(c2.inc()); //13
+        /*
+        * 在返回的对象中实现了一个闭包，该闭包携带了一个局部变量x，并且，从外部代码根本无法访问到变量x
+        * 换句话说，闭包就是携带状态的函数，并且它的状态完全可以对外隐藏起来
+        * */
+        /*闭包还可以把多参数的函数变成单参数的函数，例如要计算x可以用Math.pow(x, y)函数，
+        不过考虑到经常计算x2或x3，我们可以利用闭包创建新的函数pow2和pow3
+        * */
+        function make_pow(n) {
+            return function (x) {
+                return Math.pow(x, n);
+            }
+        }
+        //创建2个新函数
+        var pow2 = make_pow(2);
+        var pow3 = make_pow(3);
+        console.log(pow2); //function (x) {return Math.pow(x, n);}
+        console.log(pow2(5)); //25
+        console.log(pow3(7)); //343
+
+        /*
+        * 脑洞大开篇，用JavaScript函数写这些计算，不需要0、1、2、3这些数字和+、-、*、/这些符号。
+        * */
+        //定义数字0:
+
+        function n(argout) {
+            return function (argin) {
+                return argout + argin;
+            }
+        }
+        function m(argout) {
+            return function (argin) {
+                return argout + argin;
+            }
+        }
+        function addd(a, b) {
+            return function(f) {
+                return function (x) {
+                    return b(f)(a(f)(x)); // m(1)(n(1)(4))
+                }
+            }
+        }
+        let res = addd(n, m)(1)(4);
+        console.log(res); //6
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

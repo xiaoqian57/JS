@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>高阶函数Higher-order function</title>
+    <script>
+        'use strict'
+        //一个函数能接受另一个函数作为参数，这种函数就能称之为高阶函数
+        function add(x, y, f) {
+            return f(x) + f(y);
+        }
+        console.log(add(-5, 6, Math.abs));
+
+        function pow(x) {
+            return x * x;
+        }
+        var arr = [1,2,3,4,5,6,7,8,9];
+        //map()作为高阶函数，把运算规则抽象了
+        console.log(arr.map(pow)); //Array [ 1, 4, 9, 16, 25, 36, 49, 64, 81 ]
+        //还可以把Array的所有数字转化成字符串
+        console.log(arr.map(String)); //Array [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
+        //传统做法
+        var result = [];
+        for (let i = 0; i < arr.length; i++) {
+            result.push(pow(arr[i]));
+        }
+        console.log(result);
+
+        /*
+        * Array的reduce()把一个函数作用在这个Array的[x1, x2, x3...]上，这个函数必须接收两个参数，
+        * reduce()把结果继续和序列的下一个元素做累积计算，其效果就是：
+        * [x1, x2, x3, x4].reduce(f) = f(f(f(x1, x2), x3), x4)
+        * */
+        //对一个Array求和
+        var arr2 = [1,3,5,7,9];
+        arr2.reduce(function (x, y) {
+            return x + y;
+        }); // 25
+        // 1 + 3
+        // 4 + 5
+        // 9 + 7
+        // 16 + 9
+
+        //将数组[1,3,5,7,9]变成字符串13579
+        var red = arr2.reduce(function (x, y) {
+                return 10 * x + y;
+            });//13579
+
+        function string2int(s) {
+            let strArr = s.split('');
+            //通过JS的弱类型转换，实现字符类型到数字类型的转换
+            function toInt(data) {
+                return +data;
+            }
+            let numArr = strArr.map(toInt); //通过map()把字符串数组转换成数字数组
+            let num = numArr.reduce(function (x, y) {
+                return Number(x) * 10 + Number(y);
+            });
+            return num;
+        }
+        console.log(string2int('12345'));
+    </script>
+</head>
+<body>
+
+</body>
+</html>

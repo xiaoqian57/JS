@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>es6新特性</title>
+        <script>
+            /*变量let, var声明的变量作用域为包围它的函数，而 let 声明的变量作用域仅在它所在的块中*/
+            if (true) {
+                let x = 1;
+            }
+            //console.log(x);  //undefined
+
+            /*const,使用 const，你可以声明一个值的只读引用。必须直接给一个变量赋值。如果尝试修改变量或者没有立即给变量赋值，都将报错*/
+            const  MY_CONST = 1;
+            console.log("my_const变量一旦定义不可修改："+MY_CONST);
+            //MY_CONST = 2;  // error
+            //const MY_CONSTANT;  // error
+
+            //let对比var
+            var a = 5;
+            var b = 10;
+            if (a === 5) {
+                let a = 4;
+                //var b = 1;
+                let b = 2;
+                console.log("a:"+a); //4
+                //console.log("b:"+b); //1  如果在if内部重新赋值var b = 1;,则此时b为1，var b定义是函数级
+                console.log("b:"+b); //2  let b定义则是块级作用域
+            }
+            console.log("a:"+a); //5
+            console.log("b:"+b); //1
+
+            /*const声明的对象或数组其属性或数组成员还是可以改变的*/
+            const MY_OBJECT = {some: 1};
+            MY_OBJECT.some = 'one';
+            console.log("my_object对象的some属性可修改："+MY_OBJECT.some);
+
+            /*箭头函数 return声明被隐式加入  带有零或多个参数时，必须使用括号：*/
+            let books = [{title:'X', price: 10}, {title: 'Y', price: 15}];
+            console.log("books:"+books[0].title+","+books[0].price+" ; "+books[1].title+","+books[1].price);
+            let titles = books.map(item => item.title);
+            console.log("titles:"+titles);
+
+            //ES5 equivalent:
+//            var titles = books.map(function (item) {
+//                return item.title;
+//            });
+
+            /*带有零或多个参数时，必须使用括号*/
+            let new_books = books.map(() => 2);
+            console.log("new_books:"+new_books);
+            //es5
+            books.map(function () {
+                return 2;
+            });
+            let new_arr = [1,2].map((n, index) => n * index);
+            console.log("new_arr:"+new_arr);
+            //es5 equivalent
+            [1, 2].map(function (n, index) {
+                return n * index;
+            });
+            let results = [1, 2, 3, 4, 5].map(n => {
+                n = n % 3;
+                return n;
+            });
+            console.log("results:"+results);
+            //es5
+//            var results = [1, 2, 3, 4, 5].map(function (n) {
+//                n = n % 3;
+//                return n;
+//            });
+            /*箭头函数继承了当前上下文的this和arguments*/
+            let sale_book = {
+                title: 'X',
+                sellers: ['A', 'B'],
+                printSellers() {
+                    this.sellers.forEach(seller => console.log(seller + 'sellers' + sellers.title));
+                }
+            };
+            console.log(sale_book);
+            //es5
+            var sale_books = {
+                title: 'X',
+                sellers: ['A', 'B'],
+                printSellers: function() {
+                    var that = this;
+                    this.sellers.forEach(function(seller){
+                        console.log(seller+'sellers'+that.title);
+                    });
+                }
+            };
+
+            /*字符串*/
+            //方法
+            console.log('my String'.startsWith('my')); //true
+            console.log('my String'.endsWith('my')); //false
+            console.log('my String'.includes('str')); //false
+            console.log('my '.repeat(3)); // 'my my my '
+            //模板字符串
+            let name = 'John',
+            apples = 5, pears = 7, bananas = function () {
+                    return 3;
+                };
+            console.log('This is ${name}');
+            console.log('He carries ${apples} apples, ${pears} pears, and ${bananas} bananas.');
+            //ES5 equivalent
+            console.log('He carries ' + apples + ' apples, ' + pears + ' pears, and ' + bananas() +' bananas.');
+
+            let x = `1...
+2...
+3 lines long!`;
+            //es5 equivalents
+            var y = "1...\n" +
+                    "2...\n" +
+                    "3 lines long!";
+            var z = "1...\n2...\n3 lines long!";
+            console.log(x+"\n"+y+"\n"+z);
+//            1...
+//            2...
+//            3 lines long!
+
+            /*数组*/
+            //Array对象增加了一些新的静态方法，Array原型上也增加了一些新的方法
+            let itemElements = document.querySelectorAll("div.note, div.alert");
+            let items = Array.from(itemElements);
+            items.forEach(function(element){
+                console.log(element.nodeType);
+            });
+            //used in ES5
+            let items2 = Array.prototype.slice.call(itemElements);
+            console.log(items2.nodeType);
+
+        </script>
+    </head>
+    <body>
+        <div class="note">note</div>
+        <div class="alert">alert</div>
+    </body>
+</html>

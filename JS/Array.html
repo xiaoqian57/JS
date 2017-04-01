@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array</title>
+    <script>
+        //直接给Array的length赋一个新值会导致Array数组大小变化
+        var arr = [1,2,3];
+        console.log(arr.length); //3
+        arr.length = 6;
+        console.log(arr); // arr[1,2,3,undefined,undefined,undefined]
+        arr.length = 2;
+        console.log(arr); // arr[1,2]
+
+        //通过索引赋新值
+        arr[1] = 'A';
+        console.log(arr); // arr[1,"A"]
+
+        //通过索引赋值超过其范围会引起Array大小变化
+        arr[5] = "B";
+        console.log(arr); // arr[1,2,undefined, undefined, undefined,"B"]
+        /*javascript数组访问越界不会报错，但不推荐*/
+
+        //与String类似，Array可以通过indexOf()来搜索一个指定元素的位置
+        var arr2 = [10,20,'30','xyz'];
+        console.log(arr2.indexOf(20)); //1
+        console.log(arr2.indexOf('30')); //2
+        console.log(arr2.indexOf('xyz')); //3
+        console.log(arr2.indexOf(30)); //-1
+
+        //slice()截取Array的部分元素，返回新的Array
+        var arr3 = ['A','B','C','D','E','F','G','H'];
+        console.log(arr3.slice(0,3)); //从索引0开始到3，不包括3["A","B","C"]
+        console.log(arr3.slice(3)); //从索引3开始至结束["D","E","F","G","H"]
+        // .slice()不传任何参数是复制
+        console.log(arr3.slice());
+
+        //push()向Array末尾添加若干元素，pop()把Array的末尾元素删除掉
+        var arr4 = [1,2];
+        arr4.push('A','B');
+        console.log(arr4); // [1,2,"A","B"]
+        console.log(arr4.pop()); //B
+        arr4.pop();arr4.pop();arr4.pop();
+        console.log(arr4); //[]
+        console.log(arr4.pop()); //undefined
+
+        //unshift()往Array头部添加若干元素，shift()把第一个元素删掉
+        var arr5 = [1,2];
+        console.log(arr5.unshift('A','B')); //返回Array新的长度：4
+        console.log(arr5); // ["A","B",1,2]
+        console.log(arr5.shift()); // A
+        arr5.shift();arr5.shift();arr5.shift();
+        console.log(arr5); // []
+        console.log(arr5.shift()); //undefined
+
+        //sort()排序
+        var arr6 = ['C','B','A','a','c'];
+        console.log(arr6.sort()); // ["A","B","C","a","c"]
+
+        //reverse()反转
+        console.log(arr6.reverse()); //Array [ "c", "a", "C", "B", "A" ]
+
+        //splice()方法是修改Array的“万能方法”，它可以从指定的索引开始删除若干元素，然后再从该位置添加若干元素：
+        var arr7 = ['Microsoft', 'Apple', 'Yahoo', 'AOL', 'Excite', 'Oracle'];
+        //从索引2开始删除3个元素，再添加两个元素
+        arr7.splice(2,3,'Google','Facebook');
+        console.log(arr7); //Array [ "Microsoft", "Apple", "Google", "Facebook", "Oracle" ]
+        //只删除，不添加
+        console.log(arr7.splice(2,2)); //Array [ "Google", "Facebook" ]，返回删除的元素
+        console.log(arr7.splice(2,0,'a','b')); //[],因为没有删除任何元素
+
+        //concat()方法把当前的Array和另一个Array连接起来，并返回一个新的Array
+        var arr8 = ['A','B','C'];
+        var added = arr8.concat([1,2,3]);
+        //并没有修改原数组
+        console.log(arr8); //        var arr8 = ['A','B','C'];
+        console.log(added); //Array [ "A", "B", "C", 1, 2, 3 ]
+        //concat()方法可以接收任意个元素和Array，并且自动把Array拆开，然后全部添加到新的Array里
+        console.log(added.concat(4,[5,6])); //[ "A", "B", "C", 1, 2, 3, 4, 5, 6 ]
+
+        //join()把当前Array的每个元素都用指定的字符串连接起来，然后返回连接后的字符串
+        var arr9 = ['a','b',1,2];
+        console.log(arr9.join('-')); //a-b-1-2
+        //如果Array不是字符串，会先转成字符串再进行连接,如果数组的某个元素又是一个Array，则可以形成多维数组
+        console.log([[1,2,3],'a',4]); //Array(3),"a",4
+
+        var arr10 = [[1,2,3],[400,500,600],[7,8,9]];
+        //取500
+        console.log(arr10[1][1]); //500
+    </script>
+</head>
+<body>
+
+</body>
+</html>

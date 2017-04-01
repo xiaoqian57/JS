@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>函数的定义和调用</title>
+    <script>
+        var abs = function (x) {
+            if (x >= 0) {
+                return x;
+            } else {
+                return -x;
+            }
+        };
+        console.log(abs(10)); //返回10
+        //由于JavaScript允许传入任意个参数而不影响调用，因此传入的参数比定义的参数多也没有问题，虽然函数内部并不需要这些参数
+        console.log(abs(-9,10,'hh',null)); //
+        //传入的参数比定义的少也没问题
+        console.log(abs()); //NaN
+        //避免收到undefined，要对参数检查
+        function abs(x) {
+            if (x != 'number') {
+                throw 'Not a Number';
+            }
+            if (x >= 0)
+                return x;
+            else
+                return -x;
+        }
+        //arguments只在函数内部起作用，永远指向当前函数的调用者传入的所有参数,类似Array但不是Array
+        function foo(x) {
+            console.log(x); //10
+            for (let i = 0; i < 10; i++) {
+                console.log(arguments[i]);
+            }
+        }
+        console.log(foo(10,20,30)); //10,20,30,undefined...(没传入的参数都是undefined)
+
+        //利用arguments，你可以获得调用者传入的所有参数。也就是说，即使函数不定义任何参数，还是可以拿到参数的值
+        function abs2() {
+            if (arguments.length == 0) {
+                return 0;
+            }
+            let x = arguments[0];
+            return x >= 0 ? x : -x;
+        }
+        console.log(abs2()); //0
+        console.log(abs2(12)); //12
+        console.log(abs2(-0.5)); //0.5
+        //实际上arguments最常用于判断常用参数的个数
+        //foo(a,[,b],c) 接收2~3个参数，b是可选参数，如果只传2个参数，b默认为null：
+        function foo2(a, b, c) {
+            if (arguments.length == 2) {
+                //实际拿到的参数是a和b，c为undefined
+                c = b; // b赋值给c
+                b = null; //b变为默认值
+            }
+            return a + c;
+        }
+        //要把中间的参数b变为“可选”参数，就只能通过arguments判断，然后重新调整参数并赋值
+        console.log(foo2(10,20)); //30
+
+        function foo3(a, b) {
+            let i, rest = [];
+            if (arguments.length > 2) {
+                for (let i = 2; i < arguments.length; i++) {
+                    rest.push(arguments[i]);
+                }
+            }
+            console.log('a = ' + a);
+            console.log('b = ' + b);
+            console.log(rest);
+        }
+        foo3(1,2,3,4,5); // a=1,b=2,[3,4,5]
+        //ES6引入了rest参数，上面可以改写成：
+        function foo4(a,b,...rest) {
+            console.log('a = ' + a);
+            console.log('b = ' + b);
+            console.log(rest);
+            console.log(rest[0]); //8
+            console.log(rest[1]); //9
+        }
+        foo4(6,7,8,9); // a = 6, b = 7, [8, 9], 8, 9
+        foo4(10); // a = 10, b = undefined, []
+
+        //return语句
+        function foo() {
+            return {name: 'foo'};
+        }
+        console.log(foo()); //Object{name: "foo"}
+        function foo2() {
+            return
+            {
+                name: 'foo2'
+            };
+        }
+        console.log(foo2()); //undefined
+        /*
+        * 由于JavaScript引擎在行末自动添加分号的机制，上面的代码实际上变成了：
+        * function foo() {
+         return; // 自动添加了分号，相当于return undefined;
+         { name: 'foo' }; // 这行语句已经没法执行到了
+         }
+        * */
+        function foo3() {
+            return {
+                name: 'foo3'
+            };
+        }
+        console.log(foo3()); // Object{name: "foo3"}
+    </script>
+</head>
+<body>
+
+</body>
+</html>

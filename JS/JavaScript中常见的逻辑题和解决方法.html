@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        /*统计数组arr中值等于item的元素出现的次数*/
+        function count1(arr, item) {
+            var count = 0;
+            arr.forEach(function(e){
+                e == item ? count++ : 0;
+            });
+            return count;
+        }
+
+        function count2(arr, item) {
+            return arr.filter(function(a){
+                return (a == item);
+            }).length;
+        }
+
+        function count3(arr, item) {
+            var res;
+            return (res = arr.toString().match(new RegExp("//b"+item+"//b","g"))) ? res.length : 0;
+        }
+
+        function count4(arr, item) {
+            var count = 0;
+            arr.map(function(a) {
+                if (a == item) {
+                    count++;
+                }
+            });
+            return count;
+        }
+
+        function fuzzyPlural(single) {
+            var result = single.replace(/o/g, 'e');
+            if (single === 'kangaroo') {
+                result += 'se';
+            }
+            return result;
+        }
+        var words = ['foot', 'goose', 'moose', 'kangaroo'];
+        console.log(words.map(fuzzyPlural));
+
+        const number = 3;
+        function fooFunction() {
+            let numberTwo = 5;
+            var answer = number + numberTwo;
+            return answer;
+        }
+        console.log(fooFunction());
+
+        function fooFunction2() {
+            var numberTwo = 6;
+            var answer = number + numberTwo;
+            return answer;
+        }
+        console.log(fooFunction2());
+
+        function foo() {
+            if (true) {
+                var a = 4; // 作用域为foo函数体内
+                let b = 5; // 作用域为if{}内
+                console.log(a); //  4
+                console.log(b); //  5
+            }
+        }
+        foo();
+//        console.log("var定义:"+a); a is not defined
+//        console.log("let定义:"+b); b is not defined
+
+        var btnList = document.getElementsByName('btn');
+//        for (var i = 0; i < btnList.length; i++) {
+//            btnList[i].onclick = function () {
+//                alert("这是第"+i+"个button");
+//            }
+//        }
+
+        for (let j = 0; j < btnList.length; j++) {
+            btnList[j].onclick = function () {
+                alert(j);
+            }
+        }
+
+    /*为数组arr中的每个元素求二次方，不要直接修改数组arr，结果返回新的数组*/
+    function square(arr) {
+        arr.map(function (item) {
+            return item * item;
+        });
+    }
+    const numbers = [1,2,3,4,5];
+    console.log("每个元素平方："+numbers.map(square));
+
+    </script>
+</head>
+<body>
+<div>
+    <button name="btn">button 1</button>
+    <button name="btn">button 2</button>
+    <button name="btn">button 3</button>
+</div>
+</body>
+</html>
