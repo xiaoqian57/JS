@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DOM</title>
+    <style>
+        .highlight{
+            color: #dd1144;
+            background-color: #ffd351;
+        }
+
+    </style>
+</head>
+<body>
+    <ul id="test-ul">
+        <li class="js">JavaScript</li>
+        <li name="book">Java &amp; JavaScript</li>
+    </ul>
+    <ul id="test-css">
+        <li class="lang dy"><span>JavaScript</span></li>
+        <li class="lang"><span>Java</span></li>
+        <li class="lang dy"><span>Python</span></li>
+        <li class="lang"><span>Swift</span></li>
+        <li class="lang dy"><span>Scheme</span></li>
+    </ul>
+    <a href="" target="_blank">_blank</a>
+    <div id="test-div" style="color:greenyellow" name="Test" start="1">
+        <ul>
+            <li><span>JavaScript</span></li>
+            <li><span>Python</span></li>
+            <li><span>Swift</span></li>
+        </ul>
+    </div>
+    <div id="test-highlight-css">
+        <ul>
+            <li class="py"><span>Python</span></li>
+            <li class="js"><span>JavaScript</span></li>
+            <li class="sw"><span>Swift</span></li>
+            <li class="hk"><span>Haskell</span></li>
+        </ul>
+    </div>
+    <input id="test-input" name="email" value="test">
+    <select id="test-select" name="city">
+        <option value="BJ" selected>Beijing</option>
+        <option value="SH">Shanghai</option>
+        <option value="SZ">Shenzhen</option>
+    </select>
+    <textarea id="test-textarea">Hello</textarea>
+<script src="jquery-3.2.0.js"></script>
+<script>
+    //获取文本和HTML
+    console.log($('#test-ul li[name=book]').text()); //Java & JavaScript
+    console.log($('#test-ul li[name=book]').html()); //Java &amp; JavaScript
+
+    $('#test-ul li').text('JS'); //两个节点都变成了JS
+    $('#not-exists').text('Hello'); //对于不存在的节点不报错，省去了if判断
+
+    //修改CSS
+    $('#test-css li.dy>span').css('background-color','#ffd351').css('color','red');
+    $('ul').css('list-style','none');
+
+    var div = $('#test-div');
+    console.log(div.css('color')); // rgb(173, 255, 47)  获取css属性
+    div.css('color','#336699'); // 设置css属性
+    div.css('color','');
+    //css()方法将作用于DOM节点的style属性，具有最高优先级。如果要修改class属性，可以用jQuery提供的下列方法：
+    var div2 = $('#test-highlight-css');
+    console.log(div2.hasClass('highlight')); //false
+    div2.addClass('highlight');
+    //div2.removeClass('highlight');
+
+    //显示和隐藏DOM
+    var a = $('a[target=_blank]');
+    a.hide(); //隐藏
+    a.show(); //显示
+
+    //获取DOM信息
+    //浏览器可视窗口大小
+    $(window).width();
+    $(window).height();
+    //HTML文档大小
+    $(document).width();
+    $(document).height();
+    //某个div的大小
+    div.width();
+    div.height();
+    div.width(400); // 设置CSS属性 width: 400px，是否生效要看CSS是否有效
+    div.height('200px'); // 设置CSS属性 height: 200px，是否生效要看CSS是否有效
+    //attr()和removeAttr()方法用于操作DOM节点的属性：
+    div.attr('data'); // undefined, 属性不存在
+    div.attr('name'); // 'Test'
+    div.attr('name', 'Hello'); // div的name属性变为'Hello'
+    div.removeAttr('name'); // 删除name属性
+    div.attr('name'); // undefined
+    //HTML5规定有一种属性在DOM节点中们可以没有值，只有出现与不出现两种
+//    <input id="test-radio" type="radio" name="test" checked value="1">
+    //等价于
+//    <input id="test-radio" type="radio" name="test checked="checked" value="1">
+    //attr()和prop()对于属性checked处理有所不同：
+    var radio = $('#test-radio');
+    radio.attr('checked'); //checked
+    radio.prop('checked'); //true
+    //prop()返回值更合理些，不过用is()方法判断更好
+    radio.is(':checked'); //true
+
+    //操作表单
+    var input = $('#test-input'),
+        select = $('#test-select')
+        textarea = $('#test-textarea');
+    console.log(input.val()); //test
+    input.val('abc@example.com'); //文本框内容已变为abc@example.com
+    console.log(select.val()); //BJ
+    console.log(select.val('SH')); //Shanghai
+    console.log(textarea.val()); //Hello
+    console.log(textarea.val('Hi')); //文本区域已更新为 Hi
+
+    /*
+    * 修改DOM结构
+    * */
+    //添加DOM
+    //增加一个li节点，要先拿到ul节点
+    var ul = $('#test-div>ul');
+    ul.append('<li><span>Haskell</span></li>');
+    //除了接受字符串，append还可以传入原始的DOM对象，jQuery对象和函数对象
+    //创建dom对象：
+    var ps = document.createElement('li');
+    ps.innerHTML = '<span>Pascal</span>';
+    //添加dom对象
+    ul.append(ps);
+    //添加jQuery对象
+    ul.append($('#scheme'));
+    //添加函数对象
+    ul.append(function (index, html) {
+        return '<li><span>Language - ' + index + '</span></li>';  //Language - 0
+    });
+    //向后添加append()  向前添加prepend()
+
+    //把新节点插入到指定位置
+    var js = $('#test-div>ul>li:first-child');
+    js.after('<li><span>Lua</span></li>');
+    //也就是说，同级节点可以用after() before()
+
+    //删除节点
+    var li_del = $('#test-div>ul>li:last-child');
+    //li_del.remove(); // Language - 0被移除了
+</script>
+</body>
+</html>

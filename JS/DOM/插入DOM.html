@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>插入DOM</title>
+</head>
+<body>
+    <p id="js">JavaScript</p>
+    <div id="list">
+        <p id="java">Java</p>
+        <p id="python">Python</p>
+        <p id="scheme">Scheme</p>
+    </div>
+    <script>
+        //把<p id="js">JavaScript</p>添加到list的最后一项：
+        var js = document.getElementById('js');
+        var list = document.getElementById('list');
+        list.appendChild(js);
+
+        //创建id为haskell的p元素添加至末尾
+        haskell = document.createElement('p');
+        haskell.id = 'haskell';
+        haskell.innerText = 'Haskell';
+        list.appendChild(haskell);
+
+        //动态创建一个<style>节点，然后把它添加到<head>节点末尾
+        var d = document.createElement('style');
+        d.setAttribute('type','text/css');
+        d.innerHTML = 'p {color: red}';
+        document.getElementsByTagName('head')[0].appendChild(d);
+
+        //insertBefore(), parentElement.insertBefore(newElement, referenceElement)，子节点会插入到referenceElement之前。
+        var ref = document.getElementById('python');
+        //将创建的haskell元素添加至python元素之前
+        list.insertBefore(haskell, ref);
+
+        //可见，使用insertBefore重点是要拿到一个“参考子节点”的引用。很多时候，需要循环一个父节点的所有子节点，可以通过迭代children属性实现：
+        for (let i = 0; i < list.length; i++) {
+           let c = list.children[i]; // 拿到第i个子节点
+        }
+    </script>
+</body>
+</html>

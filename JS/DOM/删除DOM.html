@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>删除DOM</title>
+</head>
+<body>
+    <div id="parent">
+        <p id="first">First</p>
+        <p id="second">Second</p>
+    </div>
+    <div id="parent2">
+        <p id="pfir">pfir</p>
+        <p id="psec">psec</p>
+    </div>
+    <script>
+        // 拿到待删除节点:
+        var self = document.getElementById('first');
+        // 拿到父节点:
+        var parent = self.parentElement;
+        // 删除:
+        var removed = parent.removeChild(self);
+        console.log(removed === self); // true
+
+        /*或者先拿到parent节点*/
+        var parent2 = document.getElementById('parent2');
+        parent2.removeChild(parent2.children[0]);
+        parent2.removeChild(parent2.children[1]); //parameter 1 is not of type 'Node'.
+        /*
+        * 浏览器报错：parent.children[1]不是一个有效的节点。原因就在于，当<p>pfir</p>节点被删除后，
+        * parent.children的节点数量已经从2变为了1，索引[1]已经不存在了。
+        * */
+    </script>
+</body>
+</html>

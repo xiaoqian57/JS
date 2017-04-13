@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作DOM</title>
+    <style>
+        .c-red{
+            background: red;
+        }
+        .c-green{
+            background: green;
+        }
+    </style>
+</head>
+<body>
+    <div id="test">
+        <div class="c-red">
+            <p id="test-p">JavaScript</p>
+            <p>Java</p>
+        </div>
+        <div class="c-red c-green">
+            <p>Python</p>
+            <p>Ruby</p>
+            <p>Swift</p>
+        </div>
+        <div class="c-green">
+            <p>Scheme</p>
+            <p>Haskell</p>
+        </div>
+    </div>
+    <script>
+        /*第一种方法先获得父节点*/
+        // 返回ID为'test'的节点：
+        var test = document.getElementById('test');
+
+        // 返回test内部所有div节点
+        var divs = test.getElementsByTagName('div');
+        console.log(divs); // HTMLCollection [ <div.c-red>, <div.c-red.c-green>, <div.c-green> ]
+
+        // 返回test内部所有class包含c-red的节点
+        var reds = test.getElementsByClassName('c-red');
+        console.log(reds); // HTMLCollection [ <div.c-red>, <div.c-red.c-green> ]
+
+        // 获取节点test下的所有直属子节点:
+        var cs = test.children;
+        console.log(cs); // HTMLCollection [ <div.c-red>, <div.c-red.c-green>, <div.c-green> ]
+
+        // 获取节点test下第一个，最后一个子节点：
+        var first = test.firstElementChild;
+        var last = test.lastElementChild;
+        console.log('first child:' + first + ' last child:' + last);
+
+        /*第二种方法用querySelector()和querySeletorAll()*/
+
+        //获取ID为test节点
+        var testd = document.querySelector('#test');
+        console.log(testd); // <div id="test">
+
+        //通过querySelectorAll()获取test节点内符合条件的所有节点
+        var ps = testd.querySelectorAll('div.c-green > p');
+        console.log(ps); // NodeList [ <p>, <p>, <p>, <p>, <p> ]
+
+    </script>
+</body>
+</html>

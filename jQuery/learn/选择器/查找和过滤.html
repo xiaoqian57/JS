@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查找和过滤</title>
+</head>
+<body>
+    <ul class="lang">
+        <li class="js dy">JavaScript</li>
+        <li class="dy">Python</li>
+        <li id="swift">Swift</li>
+        <li class="dy">Scheme</li>
+        <li name="haskell">Haskell</li>
+    </ul>
+    <script src="../jquery-3.2.0.js"></script>
+    <script>
+        //用find()查找
+        var ul = $('ul.lang'); //获得ul
+        var dy = ul.find('.dy'); // 获得JavaScript, Python, Scheme
+        var swf = ul.find('#dy'); //获得swift
+        var hsk = ul.find('[name=haskell]');
+
+        //如果要从当前节点开始向上查找，使用parent()方法
+        var swift = $('#swift');
+        var swift_parent = swift.parent(); //获得swift的上层节点<ul>
+        var a = swift.parent('div.red'); //从swift的父节点开始向上查找，直到找到某个符合条件的节点并返回
+
+        //同一层节点 next() prev()
+        console.log(swift.next()); //返回Scheme节点
+        swift.next('[name=haskell]'); //Haskell是后续第一个符合选择器条件的节点
+        swift.prev(); //Python
+        swift.prev('.js'); //JavaScript
+
+        //过滤
+        var langs = $('ul.lang li'); // 拿到JavaScript, Python, Swift, Scheme和Haskell
+        var langs_filter = langs.filter('.dy'); // 拿到JavaScript, Python, Scheme
+        //或者传入一个函数
+        langs.filter(function () {
+            return this.innerHTML.indexOf('S') === 0; //返回S开头的节点，注意this是dom对象并非jQuery对象
+        }); // 拿到Swift, Scheme
+        //map()方法把一个jQuery对象包含的若干DOM节点转化为其他对象：
+        var arr = langs.map(function () {
+            return this.innerHTML;
+        }).get();
+        console.log(arr); //Array [ "JavaScript", "Python", "Swift", "Scheme", "Haskell" ]
+
+        //一个jQuery对象不止包括了一个DOM节点
+        var js = langs.first();
+        console.log(js); //Object { 0: <li.js.dy>, length: 1, prevObject: Object }
+        var haskell = langs.last();
+        console.log(haskell); //Object { 0: <li>, length: 1, prevObject: Object }
+        var sub = langs.slice(2,4);
+        console.log(sub); //Object { 0: <li#swift>, 1: <li.dy>, length: 2, prevObject: Object }
+
+    </script>
+</body>
+</html>

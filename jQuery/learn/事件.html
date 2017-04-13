@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style>
+        #testMouseMoveDiv{
+            width: 200px;
+            height: 100px;
+            border: 1px solid red;
+            margin-top: 20px;
+        }
+    </style>
+    <script src="jquery-3.2.0.js"></script>
+    <script>
+        //我们自己的初始化代码必须放到document对象的ready事件中，保证DOM已完成初始化：
+        $(document).on('ready', function () {
+            $('#test-form').on('submit', function () {
+                alert('submit');
+            });
+        });
+        //也可以这样简化
+        $(document).ready(function () {
+            $('#test-form').submit(function () {
+                alert('submit2');
+            });
+        });
+        //甚至还可以再简化：
+        $(function () {
+            $('#test-form').submit(function () {
+                alert('submit2');
+            });
+        }); //最常见
+        $(function () {
+            console.log('init A...');
+        });
+        $(function () {
+            console.log('init B...');
+        });
+        $(function () {
+            console.log('init C...');
+        });
+
+        /*事件参数*/
+         $(function () {
+            $('#testMouseMoveDiv').mousemove(function (e) {
+                $('#testMouseMoveSpan').text('pageX = ' + e.pageX + ', pageY = ' + e.pageY);
+            });
+         });
+
+         //取消绑定
+        function hello() {
+            alert('hhhhhhello');
+        }
+        var a_bind = $('#test')
+        a.click(hello); //绑定事件
+        //10秒后解除绑定
+        setTimeout(function () {
+            a.off('click', hello);
+        }, 10000);
+        //无参数调用off()一次性移除已绑定的所有类型的事件处理函数。
+
+        //事件触发条件
+        var input = $('#test-input');
+        input.change(function () {
+            console.log('change...');
+        });
+        
+        //浏览器安全限制
+        //无法弹出新窗口，将被浏览器屏蔽
+        $(function () {
+            window.open('/');
+        });
+        //只能由用户操作触发
+        var btn1 = $('#testBtn1');
+        var btn2 = $('#testBtn2');
+        function popupTestWindow() {
+            window.open('/');
+        }
+        btn1.click(function () {
+            popupTestWindow();
+        });
+        btn2.click(function () {
+            setTimeout(popupTestWindow, 100);
+        })
+    </script>
+</head>
+<body>
+    <a id="test-link" href="#0">click me!</a>
+    <a id="test" href="#1">aaaaaa</a>
+    <form id="test-form">
+        <input id="test-input" type="text">
+    </form>
+    <div id="testMouseMoveDiv">
+        <span id="testMouseMoveSpan"></span>
+    </div>
+    <script>
+        var a = $('#test-link');
+        //on()方法用来绑定一个事件，需要传入事件名称和一个处理函数：
+        a.on('click', function () {
+            alert('Hello!');
+        });
+        //click()
+        a.click(function () {
+            alert("World!");
+        });
+
+        /*
+        * jQuery能够绑定的事件包括
+        * click: 鼠标单击时触发；
+         dblclick：鼠标双击时触发；
+         mouseenter：鼠标进入时触发；
+         mouseleave：鼠标移出时触发；
+         mousemove：鼠标在DOM内部移动时触发；
+         hover：鼠标进入和退出时触发两个函数，相当于mouseenter加上mouseleave。
+        * */
+    </script>
+</body>
+</html>

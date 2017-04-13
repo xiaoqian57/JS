@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>AJAX</title>
+</head>
+<body>
+    <p id="res">ppppppppppp</p>
+
+    <script>
+        var textarea = document.getElementById('res');
+
+        function success(text) {
+            textarea.innerHTML = text;
+        }
+
+        function fail(code) {
+            textarea.innerText = 'Error code: ' + code;
+        }
+
+        var request = new XMLHttpRequest(); //新建XMLHttpRequest对象
+        //var request = new ActiveXObject('Microsoft.XMLHTTP'); // 新建Microsoft.XMLHTTP对象(低版本IE)
+        request.onreadystatechange = function () { //状态发生变化时，函数被回调
+            if (request.readyState === 4) { //成功完成
+                //判断相应结果：
+                if (request.status === 200) {
+                    //成功，通过responseText拿到响应的文本
+                    return success(request.responseText);
+                } else {
+                    //失败，根据响应码判断失败原因
+                    return fail(request.status);
+                }
+            } else {
+                //HTTP请求还在继续。。
+            }
+        }
+        //发送请求：
+        request.open('GET', '/api/categories');
+        request.send();
+        alert('请求已发送，请等待相应....');
+
+        /*
+        * 跨域加载
+        * */
+    </script>
+</body>
+</html>

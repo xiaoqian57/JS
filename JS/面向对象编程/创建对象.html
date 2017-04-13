@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>创建对象</title>
+    <script>
+        //用构造函数创建对象
+        function Student(name) {
+            this.name = name;
+            this.hello = function () {
+                alert('Hello ' + this.name + '!');
+            }
+        }
+        var xiaoming = new Student('小明');
+        console.log(xiaoming.name); // 小明
+        xiaoming.hello(); // Hello, 小明！
+
+        /*xiaoming的原型链：
+        xiaoming ----> Student.prototype ----> Object.prototype ----> null
+         */
+
+        //用 new Student()创建的对象还从原型上获得了一个constructor属性，它指向函数Student本身：
+        console.log(xiaoming.constructor === Student.prototype.constructor); //true
+        console.log(Student.prototype.constructor === Student); //true
+        console.log(Object.getPrototypeOf(xiaoming) === Student.prototype); //true
+        console.log(xiaoming instanceof Student); //true
+
+        //编写一个createStudent()函数，在内部封装所有new操作，一个常用的编程模式像这样：
+        function Student2(props) {
+            this.name = props.name || '匿名'; //默认值为匿名
+            this.grade = props.grade || 1; //默认值为1
+        }
+        Student2.prototype.hello = function () {
+            alert('Hello ' + this.name + '!');
+        }
+        function createStudent(props) {
+            return new Student2(props || {});
+        }
+        var xiaoming2 = createStudent({
+            name: '小明2'
+        });
+        console.log(xiaoming2.grade); //1
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

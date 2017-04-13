@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>选择器</title>
+    <style>
+        .abc2{
+            color: palevioletred;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            alert('welcome');
+        }
+    </script>
+</head>
+    <form>
+        <table>
+            <tbody>
+                <tr>
+                    <td name="email">email:</td>
+                    <td><input name="email"></td>
+                </tr>
+                <tr>
+                    <td>password:</td>
+                    <td><input type="password" name="a b"></td>
+                </tr>
+            </tbody>
+        </table>
+    </form>
+    <div id="abc">abc</div>
+    <div id="abc2">abc2</div>
+    <a href="http://jquery.com">jQuery</a>
+    <script src="../jquery-3.2.0.js"></script>
+    <script>
+        //jQuery对象类似数组，它的每个元素都是一个引用了DOM节点的对象，如果id不存在，返回的jQuery对象为[]
+        console.log($('#abc')); //[ <div#abc> ]
+        //有时候不用dom，可以把dom对象重新包装成jQuery对象
+        var divDom = $('div').get(0);
+        var another = $(divDom);
+        console.log(another); //[ <div#abc> ]
+
+        console.log($('div')); //{ 0: <div#abc>, 1: <div#abc2>, length: 2, prevObject: Object[1] }
+        console.log($('div').get(1)); //<div id="abc2">
+        console.log($('td')); //{ 0: <td>, 1: <td>, 2: <td>, 3: <td>, length: 4, prevObject: Object[1] }
+
+        var a = $('.abc2');
+        console.log(a); //{ 0: <div#abc2.abc2>, length: 1, prevObject: Object[1] }
+
+        //按属性查找
+        var email = $('[name=email]');
+        console.log(email); //{ 0: <input>, length: 1, prevObject: Object[1] }
+        var pwd = $('[type = password]');
+        console.log(pwd); //{ 0: <input>, length: 1, prevObject: Object[1] }
+        var a_b = $('[name="a b"]'); // 属性名有空格等特殊符号用""
+        console.log("a b属性有空格等特殊符号："+a_b);
+        //还可以根据前缀或后缀查找
+        var icons = $('[name^=icon]'); // 找出所有name属性值以icon开头的DOM
+        // 例如: name="icon-1", name="icon-2"
+        var names = $('[name$=with]'); // 找出所有name属性值以with结尾的DOM
+        //这个方法尤其适合通过class属性查找，且不受class包含多个名称的影响：
+        var iconss = $('[class^="icon-"]');
+
+        //组合查找
+        var emailInput = $('input[name=email]');
+        console.log(emailInput); //{ 0: <input>, length: 1, prevObject: Object[1] }
+        //根据tag和class来组合查找也很常见：
+        var tr = $('tr.red');
+
+        //多项选择器
+        $('p,div'); // 把<p>和<div>都选出来
+        $('p.red,p.green'); // 把<p class="red">和<p class="green">都选出来
+
+        $(document).ready(function () {
+            $('a').click(function (event) {
+                alert("Thanks for visiting!");
+            });
+        });
+    </script>
+</body>
+</html>

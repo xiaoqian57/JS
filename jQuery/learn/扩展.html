@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编写jQuery插件</title>
+    <script src="jquery-3.2.0.js"></script>
+    <script>
+        //给jQuery对象绑定一个新方法是通过$.fn对象实现的
+        $.fn.highlight1 = function () {
+            //this已绑定为当前jQuery对象
+            this.css('backgroundColor','#fffceb').css('color','#d85030');
+            return this;
+        } // return this是因为要支持链式操作，所以还要返回jquery对象
+        $(function () {
+            $('#test-highlight1 span').highlight1();
+        });
+        //希望颜色能够自定义
+        $.fn.highlight2 = function (options) {
+            //考虑到各种情况：
+            //options为undefined
+            //options只有部分key
+            var bgColor = options && options.backgroundColor || '#fffceb';
+            var color = options && options.color || '#d85030';
+            this.css('backgroundColor', bgColor).css('color', color);
+            return this;
+        }
+        $(function () {
+            $('#test-highlight2 span').highlight2({
+                backgroundColor: '#00a8e6',
+                color: '#ffffff'
+            });
+        });
+
+        /*
+        * 另一种方法是使用jQuery提供的辅助方法$.extend(target, obj1, obj2, ...)，它把多个object对象的属性合并到
+        * 第一个target对象中，遇到同名属性，总是使用靠后的对象的值，也就是越往后优先级越高：
+        * */
+        //把默认值和用户传入的options合并到对象{}中并返回
+        var opts = $.extend({},{
+            backgroundColor: '#00a8e6',
+            color: '#ffffff'
+        },options);
+        /*终极版*/
+        //设置缺省值，不用每次调用都要传参数，以后统一使用无参的highlight()
+        $.fn.highlight = function (options) {
+            //合并默认值和用户设定值：
+            var opts = $.extend({},$.fn.highlight.defaults,options);
+            this.css('backgroundColor',opts.backgroundColor).css('color',opts.color);
+            return this;
+        }
+        //设定默认值：
+        $.fn.highlight.defaults = {
+            backgroundColor: '#fff8de',
+            color: '#d85030'
+        }
+
+        //人民终于满意了
+        $.fn.highlight.defaults.backgroundColor = '#fff';
+        $.fn.highlight.defaults.color = '#000';
+
+        //可以愉快的调用highlight()了
+        $(function () {
+            $('#test-highlight p:first-child span').highlight();
+            $('#test-highlight p:last-child span').highlight({
+                color: '#dd1144'
+            });
+        });
+
+        /*
+        * 针对特定元素的扩展
+        * */
+        $.fn.external = function () {
+            //return返回的each()返回结果，支持链式调用：
+            return this.filter('a').each(function () {
+                //each()内部的回调函数的this绑定为DOM本身：
+                var a = $(this);
+                var url = a.attr('href');
+                if (url && (url.indexOf('http://')===0 || url.indexOf('https://')===0)) {
+                    a.attr('href','#0')
+                        .removeAttr('target')
+                        .append('<i class="uk-icon-external-link"></i>')
+                        .click(function () {
+                            if (confirm('你确定要前往' + url + "?")) {
+                                window.open(url);
+                            }
+                        });
+                }
+            });
+        }
+        //实测
+        $('#test-external a').external();
+    </script>
+</head>
+<body>
+    <div id="test-highlight1">
+        <p>什么是<span>jQuery</span></p>
+        <p><span>jQuery</span>是目前最流行的<span>JavaScript</span>库。</p>
+    </div>
+    <div id="test-highlight2">
+        <p>什么是<span>jQuery</span> <span>Plugin</span></p>
+        <p>编写<span>jQuery</span> <span>Plugin</span>可以用来扩展<span>jQuery</span>的功能。</p>
+    </div>
+    <div id="test-highlight">
+        <p>如何编写<span>jQuery</span> <span>Plugin</span></p>
+        <p>编写<span>jQuery</span> <span>Plugin</span>，要设置<span>默认值</span>，并允许用户修改<span>默认值</span>，或者运行时传入<span>其他值</span>。</p>
+    </div>
+    <div id="test-external">
+        <p>如何学习<a href="http://jquery.com">jQuery</a>？</p>
+        <p>首先，你要学习<a href="/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000">JavaScript</a>，
+            并了解基本的<a href="https://developer.mozilla.org/en-US/docs/Web/HTML">HTML</a>。</p>
+    </div>
+</body>
+</html>
