@@ -1,0 +1,57 @@
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+		}
+		html,body,.swiper-container{
+			margin:50px auto;
+			width: 50%;
+			height: 100%;
+			overflow: hidden;
+		}
+		.swiper-container{
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+		}
+		.swiper-wrapper{
+			width: 100%;
+			height: 100%;
+			/*Flexible Box,弹性布局，用来为盒状模型提供最大的灵活性*/
+			display: flex;
+		}
+		.swiper-slide{
+			width: 100%;
+			height: 300px;
+			/*项目等分空间*/
+			flex-grow:1;
+			/*项目的缩小比例，默认为1，即如果空间不足，该项目将缩小;
+			如果所有项目的flex-shrink属性都为1，当空间不足时，都将等比例缩小。
+			如果一个项目的flex-shrink属性为0，则空间不足时，前者不缩小。*/
+			/*flex-shrink:0;*/
+		}
+		.bg1{
+			background: red;
+			font-size: 40px;
+			color: #fff;
+			text-align: center;
+			line-height: 300px;
+			font-weight: bold;
+		}
+		.bg2{
+			background: green;
+			font-size: 40px;
+			color: #fff;
+			text-align: center;
+			line-height: 300px;
+			font-weight: bold;
+		}
+		.bg3{
+			background: blue;
+			font-size: 40px;
+			color: #fff;
+			text-align: center;
+			line-height: 300px;
+			font-weight: bold;
+		}
+	</style>

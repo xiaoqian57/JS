@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>新元素</title>
+		<style>
+			ruby {
+				color: #53ADFF;
+			}
+			#recDiv {
+				width: 350px;
+				height: 70px;
+				padding: 10px;
+				border: 1px solid #aaaaaa;
+			}
+		</style>
+	</head>
+	<body>
+		<!--canvas默认大小300*150-->
+		<canvas id="myCanvas" width="100px" height="200px"></canvas>
+		
+		<canvas id="myCan2" width="200px" height="200px"></canvas>
+		<!--带搜索的下拉列表-->
+		<input list="browsers" />
+		<datalist id="browsers">
+			<option value="Internet Explorer"></option>
+			<option value="FireFox"></option>
+			<option value="Chrome"></option>
+			<option value="Safari"></option>
+			<option value="Opera"></option>
+		</datalist>
+		
+		<form oninput="x.value=parseInt(a.value)+parseInt(b.value)">0
+			<input type="range" id="a" value="50" />100 
+			+<input type="number" id="b" value="50" />
+			=<output name="x" for="a b"></output>
+		</form>
+		<p style="color: blueviolet;font-size: larger;">article:</p>
+		<article>
+			<h1>Chrome</h1>
+			<p>A new way to get online</p>
+		</article>
+		<p style="color: blueviolet;font-size: larger;">aside:</p>
+		<aside>
+			<h4>Epcot Center</h4>
+			<p>The Epcot Center is a theme park in Disney World, Florida.</p>
+		</aside>
+		<p>只有IE9支持command标签：</p>
+		<menu>
+			<command type="command" label="Save" onclick="save()">Save</command>
+		</menu>
+		<ruby>
+  			漢 <rp>(</rp><rt>Kan</rt><rp>)</rp>
+  			字 <rp>(</rp><rt>ji</rt><rp>)</rp>
+		</ruby>
+		
+		<section>
+			<math xmlns="http://www.w3.org/1998/Math/MathML">
+				<mrow>
+	            <msup><mi>a</mi><mn>2</mn></msup>
+	            <mo>+</mo>
+					
+	            <msup><mi>b</mi><mn>2</mn></msup>
+	            <mo>=</mo>
+					
+	            <msup><mi>c</mi><mn>2</mn></msup>
+	         	</mrow>
+	         	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;ff显示矩阵正常，chrome不兼容：
+	         	<mrow>
+		            <mi>A</mi>
+		            <mo>=</mo>
+					
+		            <mfenced open="[" close="]">
+					
+		               <mtable>
+		                  <mtr>
+		                     <mtd><mi>x</mi></mtd>
+		                     <mtd><mi>y</mi></mtd>
+		                  </mtr>
+							
+		                  <mtr>
+		                     <mtd><mi>z</mi></mtd>
+		                     <mtd><mi>w</mi></mtd>
+		                  </mtr>
+		               </mtable>
+		               
+		            </mfenced>
+         		</mrow>
+        	</math>
+		</section>
+        <p>dialog chrome正确显示：</p>
+		<dialog open>This is an open dialog window</dialog>
+		<p>拖动w3school图片到矩形框中</p>
+		<div id="recDiv" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+		<br />
+		<img id="img" src="runoob.png" draggable="true" ondragstart="drag(event)"
+			width="336px" height="69px" />
+		
+		<p id="pos">点击获取当前坐标(可能需要较长时间)</p>
+		<button onclick="getLocation()">Click me</button>
+		<script>
+			var canvas = document.getElementById('myCanvas');
+			var ctx = canvas.getContext('2d');
+			ctx.fillStyle = '#FF0000';
+			ctx.fillRect(0,0,80,100);
+			
+			var ctx2 = canvas.getContext('2d');
+			ctx2.strokeStyle = '#53ADFF';
+			ctx2.strokeRect(0,100,80,100);
+			
+			var myCan2 = document.getElementById("myCan2");
+			var ctx3 = myCan2.getContext('2d');
+			ctx3.beginPath();
+			ctx3.arc(150,52,50,0,Math.PI*2/3);
+			ctx3.stroke();
+			ctx3.strokeStyle = '#8A2BE2';
+			ctx3.fillStyle = '#ECE023';
+			ctx3.font="30px Arial";
+			ctx3.fillText('hello',150,50,25);
+			
+			function allowDrop(event) {
+				event.preventDefault();
+			}
+			
+			function drag(ev) {
+				ev.dataTransfer.setData("Text", ev.target.id);
+			}
+			
+			function drop(ev) {
+				ev.preventDefault();
+				var data = ev.dataTransfer.getData("Text");
+				ev.target.appendChild(document.getElementById(data));
+			}
+			
+			let x = document.getElementById('pos');
+			
+			function getLocation() {
+				if(navigator.geolocation) {
+					navigator.geolocation.getCurrentPosition(showPosition);
+				} else {
+					x.innerHTML = '该浏览器不支持获取地理位置';
+				}
+			}
+			
+			function showPosotion(position) {
+				x.innerHTML = '维度：' + position.coords.latitude +
+				'<br>经度：' + position.coords.longitude;
+			}
+		</script>
+	</body>
+</html>

@@ -1,0 +1,25 @@
+@charset "utf-8"
+html{
+	font:12px  '宋体';
+}
+a{
+	color: #000;
+}
+.top{
+	background-color:  #F7F7F7;
+	height:26px;
+	border-bottom:1px  solid #DBDBDB;
+}
+.top_page{
+	width: 970px;
+	height: 26px;
+	margin: 0 auto;
+}
+.top_page_l{
+	line-height: 26px;
+}
+.top_page_r ul li{
+	line-height: 26px;
+	float: left;
+	padding-right: 10px;
+}

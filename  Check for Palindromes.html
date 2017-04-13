@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>检查回文</title>
+  </head>
+  <script type="text/javascript">
+    function palindromes(str) {
+
+      var  newStr = str.replace(/[\ |\~|`|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\-|\_|\+|\=|\||\|\[|\]|\{|\}|\;|\:|\"|\'|\,|\<|\.|\>|\/|\?]/g,"");
+      var lower_newStr = newStr.toLowerCase();
+      var reverse_newStr = lower_newStr.split('').reverse().join('');
+      return lower_newStr == reverse_newStr;
+    }
+
+    palindromes('not a panlidrome');
+  </script>
+  <body>
+
+  </body>
+</html>

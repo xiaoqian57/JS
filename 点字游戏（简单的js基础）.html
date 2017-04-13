@@ -1,0 +1,186 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+</head>
+
+<body>
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>点字游戏</title>
+    <style media="screen">
+      .wrap{
+        width: 350px;
+        border: 1px solid black;
+      }
+      .top{
+        width: 100%;
+       height: 50px;
+      }
+      .time{
+        width: 60%;
+        height: 40px;
+        font-size: 2em;
+        float: left;
+        border: 1px solid black;
+      }
+      .score{
+        width: 35%;
+        height: 40px;
+        font-size: 2em;
+        border: 1px solid black;
+        float: right;
+      }
+      .content{
+        width: 100%;
+        height: 150px;
+        font-size: 9em;
+        text-align: center;
+line-height:150px;
+    margin: 20px 0px; 
+      }
+      .about{
+        width: 100%;
+        height: 120px;
+        font-size: 2em;
+        text-indent: 2em;
+     margin: 10px 0px;
+      }
+      .footer{
+        width: 100%;
+      }
+      .footer span{
+        width: 20%;
+        font-size: 60px;
+        height: auto;
+        text-align: center;
+      }
+      .again{
+        width: 100%;
+        height: 50px;
+        font-size: 3em;
+        text-align: center;
+        margin: 10px 0px;
+      }
+    </style>
+  </head>
+<body>
+    <div class="wrap">
+      <div class="top">
+        <div class="time">
+          剩余时间:20
+        </div>
+        <div class="score">
+          完成:0
+        </div>
+      </div>
+      <div class="content">
+        红
+      </div>
+      <div class="about">
+        根据上面字的颜色从下面选择正确的字，选择正确自动开始
+      </div>
+      <div class="footer">
+        <span>红</span>
+        <span>红</span>
+        <span>红</span>
+        <span>红</span>
+        <span>红</span>
+      </div>
+      <div class="again">
+        重新开始
+      </div>
+    </div>
+<script type="text/javascript">
+      var time=document.querySelector('.time');
+      var score=document.querySelector('.score');
+      var show=document.querySelector('.content');
+      var list=document.getElementsByTagName('span');
+      var again=document.querySelector('.again');
+      again.onclick=restart;
+      var colors=['red','blue','gold','green','black'];
+      var words=['红','蓝','金','绿','黑'];
+      var times=20;
+      var scores=0;
+      var colorIndex=0;
+      var timer=null;
+      function rand(){
+        var rands=parseInt(Math.random()*5);
+        return rands;
+      }
+      function showChange(){
+        colorIndex=rand();
+        var wordIndex=rand();
+        show.innerHTML=words[wordIndex];
+        show.style.color=colors[colorIndex];
+      }
+      showChange();
+      // 随机数组
+      function arrs(){
+        var arr=[];
+        while (arr.length<colors.length) {
+          var ran1=rand();
+          var bol=true;
+          for (var i = 0; i < arr.length; i++) {
+          if (arr[i]==ran1) {
+            bol=false;
+            break;
+          }
+          }
+          if (bol) {
+            arr.push(ran1);
+          }
+        }
+        return arr;
+      }
+      function listChange(){
+        var ws=arrs();
+        var cs=arrs();
+        for (var i = 0; i < list.length; i++) {
+          list[i].innerHTML=words[ws[i]];
+          list[i].style.color=colors[cs[i]];
+          list[i].sIndex=ws[i];
+        }
+      }
+      listChange();
+      var flag=false;
+      for (var i = 0; i < list.length; i++) {
+        list[i].onclick=function(){
+          if (this.sIndex==colorIndex&&times!=0) {
+            showChange();
+            listChange();
+            flag=true;
+            scores++;
+            score.innerHTML='完成:'+scores;
+          }
+        }
+      }
+      timer=setInterval(function(){
+        if (flag) {
+          if (times==0) {
+            flag=false;
+            alert('Game Over !');
+          }else {
+            times--;
+            time.innerHTML='剩余时间:'+times;
+          }
+        }
+      },1000);
+      function restart(){
+          times=20;
+          scores=0;
+          showChange();
+          listChange();
+          flag=false;
+          time.innerHTML='剩余时间:20';
+          score.innerHTML='完成:0';
+        }
+
+    </script>
+</body>
+</html>

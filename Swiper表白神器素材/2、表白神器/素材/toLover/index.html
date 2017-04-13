@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+	<title>情人节表白</title>
+	<style>
+		/* 全局样式 */
+		*{
+			margin: 0;padding: 0;
+		}
+		/* 设置字体大小、字体样式 */
+		html{
+			font-size: 62.5%; height: 100%; width: 100%; font-family: "微软雅黑";
+		}
+		/* 插入木纹背景 */
+		body{
+			background-image: url(./img/muwen.jpg); width: 100%; height: 100%;
+		}
+		/* 使用弹性盒模型，设置盒子类型和排列方式*/
+		#box{
+			width: 100%; height: 100%; margin:0 auto; display:flex; flex-direction:column;
+		}
+		/* 头部设为35% */
+		.header{
+			width: 100%; text-align: center; height: 35%;
+		}
+		/* 每时每课，给你新机会 */
+		#text{
+			font-size: 12px; position: absolute; width: 100%; text-align: center; bottom: 66.5%; color: #fff;
+		}
+		/* 主体分配剩余空间flex-grow:1,自动占据了剩下的65% */
+		.main{
+			width: 100%; flex-grow:1; position: relative;
+		}
+		.header img{
+			height: 100%;
+		}
+		/* 定位白色背景图片 高设置95%，是为了和上面的图片对齐*/
+		.imgbg{
+			position:absolute; left: 0; top: -16%; right:0; bottom:0; margin:auto; height: 95%;
+		}
+		/* 设置文字和图片的宽高，为了适配，都必须用百分比，再通过定位，让他们固定都合适的位置 */
+		.swiper-container{
+			width: 53%; height: 35%; overflow: hidden; position: absolute; left: 0; right: 0; bottom: 0; top: -50%; margin:auto;
+		}
+		/* 使用弹性盒模型，来布局文字和图片，flex-shrink:0是设置弹性盒的收缩比例，默认为1 */
+		.swiper-wrapper{
+			width: 100%; height: 100%; display: -webkit-flex;
+		}
+		.swiper-slide{
+			width: 100%; height: 100%; -wekit-flex-grow:1; flex-shrink:0;
+		}
+		/* 设置文字 */
+		.myp{
+			line-height: 22px; text-indent: 2em;
+		}
+		/* 设置作者，让他们居右显示 */
+		.swiper-slide span{
+			text-align: right; width: 100%; height: 100%; display: inline-block;
+		}
+		/* 给图片定位，不然因为文字和图片的class名一样，所以就会重叠在一起 */
+		.swiper-container.photoBox{
+			width: 53%; height: 30%; overflow: hidden; position: absolute; left: 0; right: 0; bottom: 0; top: 25%; margin:auto;
+		}
+		.swiper-slide img{
+			width: 100%; height: 100%;
+		}
+		/* 定位咖啡杯 */
+		#pic1{
+			position: absolute; left: -35%; top: 72%; right: 0; bottom: 0; margin: auto; height: 20%; z-index: 100;
+		}
+		/* 定位花瓣 */
+		#pic2{
+			position: absolute; left: -15%; top: 85%; right: 0; bottom: 0; margin: auto; z-index: 99; height: 13%;
+		}
+		/* 定位钢笔 */
+		#pic3{
+			position: absolute; left: 42%; top: -15%; right: 0; bottom: 0; margin: auto; height: 20%;
+		}
+		/* 使用媒体查询，设置盒子宽度,可以针对不同的媒体类型定义不同的样式 */
+		@media (min-width: 430px){
+			#box{width: 430px;}
+		}
+		/* 使用媒体查询，设置文字宽度 */
+		@media (min-width: 430px){
+			#text{width: 430px;}
+		}
+	</style>
+</head>
+<body>
+	<div id="box">
+		<header class="header">
+			<img src="img/photo.png" alt="">
+			<p id="text">每时每课，给你新机会</p>
+		</header>
+		<main class="main">
+			<img class="imgbg" src="img/bg.png" alt="">
+			<div class="swiper-container">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><p class="myp">你是我温暖的手套，冰冷的啤酒，带着阳光味道的衬衫，日复一日的梦想，总之能够认识你是我这一生最大的快乐。</br><span>——《恋爱的犀牛》</span></p></div>
+					<div class="swiper-slide"><p class="myp">我想要和你一起睡到世纪末的预言，去梦游星际的边缘。下一辈子，我还打算赖着你，一生一世轮回的重演。 </br><span>——《两小无猜》</span></p></div>
+					<div class="swiper-slide"><p class="myp">日落月升，数遍星辰，夜空下还有谁在痴痴的等……我对你一往情深，夜有那么深，心就多么冷。</br><span>——杜拉斯</span></p></div>
+					<div class="swiper-slide"><p class="myp">深夜打电话对他说：想听你电话里的声音，深夜里温柔的呼吸，好想听你说“晚安”的口气。</br><span>——克里夫特</span></p></div>
+					<div class="swiper-slide"><p class="myp">我知道这辈子我们不可能在一起，那如果人有来世的话，我愿意等到下一辈子生命的最后一秒，再让我投靠死在你的怀抱。 </br><span>——顾城</span></p></div>
+					<div class="swiper-slide"><p class="myp">爱情是一朵带刺的玫瑰花，扎到了，会痛也会流血，希望我们把握好我们心中那份小小的爱，一直到我们都变老。</br><span>——朱生豪</span></p></div>
+					<div class="swiper-slide"><p class="myp">我今生最大的奢望就是：天天和你在同个盆里洗脚。平淡相守到老。</br><span>——钱钟书</span></p></div>
+					<div class="swiper-slide"><p class="myp">我想要和你一起睡到世纪末的预言，去梦游星际的边缘。下一辈子，我还打算赖着你，一生一世轮回的重演。</br><span>——聂鲁达</span></p></div>
+					<div class="swiper-slide"><p class="myp">如果说天上人间有什么值得我歌颂 ，那是因为遇见了你，才会变得如此与众不同。</br><span>——王小波</span></p></div>
+				</div>
+			</div>
+			<div class="swiper-container photoBox">
+				<div class="swiper-wrapper">
+					<div class="swiper-slide"><img src="img/pic1.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic2.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic3.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic4.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic5.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic6.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic7.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic8.jpg" alt=""></div>
+					<div class="swiper-slide"><img src="img/pic9.jpg" alt=""></div>
+				</div>
+			</div>
+			<img src="img/coffee.png" alt="" id="pic1">
+			<img src="img/flower.png" alt="" id="pic2">
+			<img src="img/pen.png" alt="" id="pic3">
+			
+		</main>
+	</div>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="jquery-3.1.1.js"></script>
+    <script src="Selector.js"></script>
+    <style>
+        #div_content,#flipshow,#fliphide{
+            padding: 5px;
+            text-align: center;
+            background-color: #ece023;
+            border:solid 1px #ece999;
+        }
+        #div_content{
+            padding: 50px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <p class="pclass">p1</p>
+    <p id="pid">p2</p>
+    <button id="select">元素选择</button><br><br>
+    <button id="append">追加元素</button>
+    <p id="p1">hello world</p>
+    <button id="append2">追加元素2</button>
+    <p id="p2">hello Chandler</p><br>
+    <button onclick="appendText()">append text</button><br><br>
+    <button id="make">change text content</button>
+    <p id="content">make the world better!</p>
+    <p id="chtml">append html</p>
+    <button id="change_input">change input content</button>
+    <input id="in" type="text" value="hello world"><br>
+    <button id="change_attr">change element tag attr</button>
+    <a href="http://www.jikexueyuan.com" id="aid">百度？</a><br>
+    <button id="hide">点我下面内容消失，1s后执行动作</button>
+    <p id="phide">我要消失……</p>
+    <button id="change_style">改变一个cool样式</button>
+    <p id="pstyle_change">我的颜色要改变</p>
+    <div id="div1" style="width: 80px;height: 80px;display: none;background-color: aqua"></div>
+    <div id="div2" style="width: 80px;height: 80px;display: none;background-color: #ece023"></div>
+    <div id="div3" style="width: 80px;height: 80px;display: none;background-color: darkgoldenrod"></div>
+    <button id="fadeIn">fade in effect</button>
+    <button id="fadeOut">fade out effect</button>
+    <button id="fadeToggle">fade toggle effect</button>
+    <button id="fadeTo">fade to effect</button>
+    <div id="flipshow">show</div>
+    <div id="fliphide">hide</div>
+    <div id="div_content">Hello World!</div>
+</body>
+</html>

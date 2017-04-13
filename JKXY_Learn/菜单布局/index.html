@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>菜单布局</title>
+    <link href="menu.css" rel="stylesheet">
+    <script src="jquery-3.1.1.js"></script>
+    <script src="app.js"></script>
+</head>
+<body>
+    <ul class=".outer">
+        <li class="main"><a href="#">菜单1</a>
+            <ul class="hmain">
+                <li><a href="#">子菜单1</a></li>
+                <li><a href="#">子菜单2</a></li>
+            </ul>
+        </li>
+        <li class="main"><a href="#">菜单2</a>
+            <ul class="hmain">
+                <li><a href="#">子菜单1</a></li>
+                <li><a href="#">子菜单2</a></li>
+            </ul>
+        </li>
+        <li class="main"><a href="#">菜单3</a>
+            <ul class="hmain">
+                <li><a href="#">子菜单1</a></li>
+                <li><a href="#">子菜单2</a></li>
+            </ul>
+        </li>
+    </ul>
+    <p><strong><em>标签切换：</em></strong></p>
+    <ul id="tabfirst">
+        <li class="tabin tab">标签1</li>
+        <li class="tab">标签2</li>
+        <li class="tab">标签3</li>
+    </ul>
+    <div class="content contentfirst">内容1</div>
+    <div class="contentfirst">内容2</div>
+    <div class="contentfirst">内容3</div>
+</body>
+</html>
