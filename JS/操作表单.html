@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,4 +82,89 @@
 
     </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作表单</title>
+</head>
+<body>
+    <p>HTML5控件：</p>
+    <input type="text" id="email"/>
+    <input type="date" value="2017-04-06"/>
+    <input type="datetime-local" value="2015-07-01T02:03:04"/>
+    <input type="color" value="#ff0000"/>
+
+    <p style="color: blueviolet">提交表单：</p>
+    <form id="login-form" action="#" target="_blank" method="post" onsubmit="return checkForm()">
+        <p id="test-error" style="color: red"></p>
+        <p>
+            用户名：<input type="text" id="username" name="username" onmouseout="checkUsername()">
+            <span id="user-error"></span>
+        </p>
+        <p>
+            口令：<input type="password" id="input-password" name="password" onmouseout="checkPwd()">
+            <span id="pwd-error"></span>
+        </p>
+        <p>
+            重复口令：<input type="password" id="password2">
+            <span id="conPwd"></span>
+        </p>
+        <!--<input type="hidden" id="md5-password" name="password"><br>-->
+        <p>
+            <button type="submit">提交</button> <button type="reset">重置</button>
+        </p>
+    </form>
+
+    <script src="md5.js"></script>
+    <script>
+
+        var username = document.getElementById('username');
+        var input_pwd = document.getElementById('input-password');
+        var pwd2 = document.getElementById('password2');
+        var user_err = document.getElementById('user-error');
+        var pwd_err = document.getElementById('pwd-error');
+//        var md5_pwd = document.getElementById('md5-password');
+
+        function checkForm() {
+
+            //把用户输入的明文变为MD5
+            //md5_pwd.value = md5(input_pwd.value);
+
+            if (checkUsername() && checkPwd() && confirmPwd()) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        var rname = /[a-zA-Z\d]{3,10}/;
+        var rpwd = /[a-zA-Z\d_$]{6,20}/;
+
+        function checkUsername() {
+            if (!rname.test(username.value)) {
+                user_err.innerHTML = '用户名要求数字或字母3-10位';
+            }
+        }
+
+        function checkPwd() {
+            if (!rpwd.test(input_pwd.value)) {
+                pwd_err.innerText = '密码要求6-10位';
+            }
+        }
+
+        function confirmPwd() {
+            if (input_pwd.value === pwd2.value) {
+                return true;
+            } else {
+                var conPwd = document.getElementById('conPwd');
+                conPwd.innerHTML = '两次输入的口令不一致';
+                return false;
+            }
+        }
+
+    </script>
+</body>
+>>>>>>> e44fb797ae5b3c61b53a91786424728d875849b9
 </html>

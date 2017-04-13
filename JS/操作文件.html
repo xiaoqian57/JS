@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,4 +61,68 @@
 
     </script>
 </body>
+=======
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>操作文件</title>
+
+</head>
+<body>
+    <input type="file" id="upload-file"><br><br>
+
+    <form action=""><input id="test-image-file" type="file"></form>
+    <div id="test-file-info" style="background-color: #53ADFF; width: 500px; height: 80px">test file info</div>
+    <div id="test-image-preview" style="background-color: yellowgreen; width: 800px; height: 500px"></div>
+
+    <script>
+        var f = document.getElementById('upload-file');
+        var filename = f.value;
+        function uploadFile() {
+            if (!filename || !(filename.endsWith('.jpg') || filename.endsWith('.png') || filename.endsWith('.gif'))) {
+                alert('Can only upload image file.');
+                return false;
+            }
+        }
+
+        /*HTML5的File API*/
+        var
+            fileInput = document.getElementById('test-image-file'),
+            info = document.getElementById('test-file-info'),
+            preview = document.getElementById('test-image-preview');
+        // 监听change事件:
+        fileInput.addEventListener('change', function () {
+            // 清除背景图片:
+            preview.style.backgroundImage = '';
+            // 检查文件是否选择:
+            if (!fileInput.value) {
+                info.innerHTML = '没有选择文件';
+                return;
+            }
+            // 获取File引用:
+            var file = fileInput.files[0];
+            // 获取File信息:
+            info.innerHTML = '文件: ' + file.name + '<br>' +
+                '大小: ' + file.size + '<br>' +
+                '修改: ' + file.lastModifiedDate;
+            if (file.type !== 'image/jpeg' && file.type !== 'image/png' && file.type !== 'image/gif') {
+                alert('不是有效的图片文件!');
+                return;
+            }
+            // 读取文件:
+            var reader = new FileReader();
+            //异步操作需要先设置一个回调函数，文件读取完毕执行回调函数可安全的获得文件全部内容
+            reader.onload = function(e) {
+                var data = e.target.result; // 'data:image/jpeg;base64,/9j/4AAQSk...(base64编码)...'
+                console.log('data:' + data);
+                preview.style.backgroundImage = 'url(' + data + ')';
+            };
+            // 以DataURL的形式读取文件:(异步操作，读取完毕后去执行回调函数)
+            reader.readAsDataURL(file);
+        });
+
+    </script>
+</body>
+>>>>>>> e44fb797ae5b3c61b53a91786424728d875849b9
 </html>
