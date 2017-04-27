@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        #dad{
+            width: 600px;
+            height: 350px;
+            margin: 20px auto;
+            background-color: lightgoldenrodyellow;
+            display: flex;
+            /*设置子容器沿主轴排列*/
+            /*justify-content: center;flex-start;flex-end;space-between;space-around*/
+            justify-content: space-around;
+            /*设置子容器如何沿交叉轴排列*/
+            /*align-items 属性用于定义如何沿着交叉轴方向分配子容器的间距。*/
+            /*align-items: center;flex-start;flex-end;baseline;stretch*/
+            align-items: center;
+            /*主轴的方向： row向右 row-reverse向左 column向上 column-reverse向下*/
+            flex-direction: row;
+            /*决定子容器换行 wrap换行 nowrap不换行 wrap-reverse反向换行*/
+            flex-wrap: wrap;
+            /*flex-flow可同时设置主轴方向与换行与否*/
+            flex-flow: row wrap;
+            /*多行沿交叉轴对齐,当子容器多行排列时，设置行与行之间的对齐方式*/
+            align-content:flex-start;
+
+            /*display: -webkit-box;*/
+            /*-webkit-box-orient: horizontal;*/
+            /*-webkit-box-pack: center;*/
+            /*-webkit-box-align: center;*/
+
+            /*display: -moz-box;*/
+            /*-moz-box-orient: horizontal;*/
+            /*-moz-box-pack: center;*/
+            /*-moz-box-align: center;*/
+        }
+
+        #son{
+                width: 80%;
+                height: 300px;
+                background-color: #53ADFF;
+                text-align: center;
+                position: relative;
+                top:30%;
+                -webkit-transform: translateY(-50%);
+                -moz-transform: translateY(-50%);
+                -ms-transform: translateY(-50%);
+                -o-transform: translateY(-50%);
+                transform: translateY(-50%);
+            }
+
+        #son1{
+            background-color: #53ADFF;
+            border-radius: 15px;
+            text-align: center;
+            margin: 5px;
+            flex:1;
+            align-self: flex-start;
+        }
+        #son2{
+            background-color: #00CB08;
+            border-radius: 15px;
+            text-align: center;
+            margin: 5px;
+            flex:1;
+            align-self: flex-end;
+        }
+        #son3{
+            background-color: coral;
+            border-radius: 15px;
+            text-align: center;
+            margin: 5px;
+            flex:10%;
+            align-self: baseline;
+        }
+        .flex{
+            border: 1px slateblue solid;
+            border-radius: 15px;
+            margin: 10px;
+            text-align: center;
+            background-color: cadetblue;
+            flex: 10%;
+            align-self: flex-end;
+            flex-direction: row-reverse;
+            flex-basis: 100px;
+            /*flex-grow设置子容器弹性伸展比例*/
+            /*flex-shrink设置子容器弹性收缩比例*/
+            /*order设置排列顺序*/
+        }
+        article{
+            background-color: lightgoldenrodyellow;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <section id="dad">
+        <div id="son1">
+            <p><#son-1/></p>
+            <p>w: 120px</p>
+        </div>
+        <div id="son2">
+            <p><#son-2/></p>
+            <p>w: 80px</p>
+        </div>
+        <div id="son3">
+            <p><#son-3/></p>
+            <p>w: 100px</p>
+        </div>
+        <div id="son4" class="flex">
+            <p>#son-4</p>
+        </div>
+        <div id="son5" class="flex">
+            <p>#son-5</p></div>
+        <div id="son6" class="flex">
+            <p>#son-6</p>
+        </div>
+        <div id="son7" class="flex">
+            <p>#son-7</p>
+        </div>
+        <div id="son8" class="flex">
+            <p>#son-8</p>
+        </div>
+    </section>
+    <article>
+        <img src="flex属性.png" alt="flex属性">
+    </article>
+    <script>
+        console.log(Math.abs(~2020));
+    </script>
+</body>
+</html>

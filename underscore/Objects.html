@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Objects</title>
+    <script src="underscore.js"></script>
+    <script>
+        function Student(name, age) {
+            this.name = name;
+            this.age = age;
+        }
+        var xiaoming = new Student('小明', 20);
+        //keys()可以非常方便地返回一个object自身所有的key，但不包含从原型链继承下来的：
+        console.log(_.keys(xiaoming)); //[ "name", "age" ]
+        Student.prototype.sex = 'male';
+        //allKeys除了object自身的keys还包括从原型链继承下来的
+        console.log(_.allKeys(xiaoming)); //[ "name", "age", "sex" ]
+
+        var obj = {
+            name: '小明',
+            age: 18
+        };
+        //返回自身的values，不包括继承原型链的
+        console.log(_.values(obj)); // [ "小明", 18 ]
+
+        //mapObject()就是针对Object的map版本
+        var obj2 = {
+            a: 1,
+            b: 2,
+            c: 3
+        }
+        //传入的函数签名，value在前，key在后
+        console.log(_.mapObject(obj2, (v, k) => 100 + v)); //{ a: 101, b: 102, c: 103 }
+
+        //invert() key value 互换
+        var obj3 = {
+            Adam: 90,
+            Lisa: 85,
+            Bart: 59
+        };
+        console.log(_.invert(obj3)); //{ 59: "Bart", 85: "Lisa", 90: "Adam" }
+
+        //clone()浅复制,两个对象相同的key所引用的value其实是同一对象,修改source会影响copied：
+        var source = {
+            name: '小明',
+            age: 20,
+            skills: ['JavaScript', 'CSS', 'HTML']
+        }
+        var copied = _.clone(source);
+        console.log(copied);
+        console.log(JSON.stringify(copied, null, ' '));
+        console.log(copied.skills === source.skills); //true
+        source.age = 22;
+        console.log(copied.age === source.age); //false
+
+        //isEqual()对两个object进行深度比较，如果内容完全相同，则返回true：
+        var o1 = { name: 'Bob', skills: { Java: 90, JavaScript: 99 }};
+        var o2 = { name: 'Bob', skills: { JavaScript: 99, Java: 90 }};
+        console.log(o1 === o2); //false
+        console.log(_.isEqual(o1, o2)); //true
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

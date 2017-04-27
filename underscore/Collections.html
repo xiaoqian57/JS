@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="underscore.js"></script>
+    <script>
+        var obj = {
+            name: 'xiaoming',
+            age: 18,
+            sex: 'male',
+            address: 'xueyuan road'
+        }
+        var upper = _.map(obj, (value, key) => key + ': ' +value);
+        console.log(JSON.stringify(upper)); //["name: xiaoming","age: 18","sex: male","address: xueyuan road"]
+        var upper2 = _.mapObject(obj, (value, key) => key + ': ' + value);
+        console.log(JSON.stringify(upper2)); //{"name":"name: xiaoming","age":"age: 18","sex":"sex: male","address":"address: xueyuan road"}
+
+        //当集合所有元素都满足条件时，_.every()返回true,当集合的至少有一个元素满足时，_.some()返回true
+        //当所有元素大于0
+        console.log(_.every([1, 4, 7, -3, -9], (x) => x > 0)); //false
+        //至少有一个元素小于0
+        console.log(_.some([1, -1, -2, -3], (x) => x < 0)); //true
+
+        //返回集合中最大最小的数
+        var arr = [3, 5, 7, 9];
+        console.log(_.max(arr)); //9
+        console.log(_.min(arr)); //3
+        //数组为空，返回infinity，所有要先判断集合不为空
+        console.log(_.max([])); //-Infinity
+
+        //groupBy()把集合的元素按照key归类，key由传入的函数返回,分组非常方便
+        var scores = [20, 81, 75, 40, 91, 59, 77, 66, 72, 88, 99];
+        var groups = _.groupBy(scores, function (x) {
+            if (x < 60) {
+                return 'C';
+            } else if (x < 80) {
+                return 'B';
+            } else {
+                return 'A';
+            }
+        });
+        console.log(groups);
+        // A: [81, 91, 88, 99],
+        // B: [75, 77, 66, 72],
+        // C: [20, 40, 59]
+
+        //shuffle()用洗牌算法随机打乱一个集合,每次结果不一样
+        console.log(_.shuffle([1,2,3,4,5,6])); //[2, 4, 1, 3, 6, 5]
+        //sample()是随机选择一个或多个元素
+        //随机选择一个
+        console.log(_.sample([1,2,3,4,5,6])); //3
+        //随机选择三个
+        console.log(_.sample([1,2,3,4,5,6],3)); //[1, 4, 5]
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

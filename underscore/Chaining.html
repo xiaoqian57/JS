@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chaining</title>
+    <style>
+        .answer{
+            width:auto;
+            background:none;
+            background:#fa3685; /* 一些不支持背景渐变的浏览器 */
+            background:-moz-linear-gradient(left, #ff67a3, #f71872);
+            background:-webkit-linear-gradient(left, #ff67a3, #f71872);
+            background:-o-linear-gradient(bottom, #8bba23, #f71872);
+            border:1px solid #df0059;
+            border-radius:4px;
+            text-align:left;
+            padding:5px 10px;
+            margin:0 0 0 10px;
+            line-height:24px;
+            height:auto;
+            color:#fff;
+        }
+    </style>
+    <script src="underscore.js"></script>
+    <script>
+        //underscore提供了把对象包装成进行链式调用的方法， chain()函数
+        console.log(_.chain([1, 4, 9, 16, 25])
+            .map(Math.sqrt)
+            .filter(x => x % 2 === 1)
+            .value());  //[ 1, 3, 5 ]
+
+    </script>
+</head>
+<body>
+    <pre class="answer">
+        我是div
+        aoeho faof
+        a hogj
+        ao gosf
+        alhe foa[pj [r
+        opief gewprgjf
+        lfdjglj ero o [p j
+        我让其二GPRSw
+        董事局gofor机构高回报的咖啡机 gw
+        输入法
+    </pre>
+</body>
+</html>

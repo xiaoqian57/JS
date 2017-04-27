@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Functions</title>
+</head>
+<body>
+    <button id="btn" onclick="once()">点我</button>
+    <script src="underscore.js"></script>
+    <script>
+        var log = console.log;
+        //直接调用log()传入的this指针是undefined
+        //log("hello,world");
+        //用call()
+        log.call(console, 'hello, world'); //这样用太麻烦
+        //bind()可以帮我们把console对象直接绑定在log()的this指针上
+        var log2 = _.bind(console.log, console);
+        log('hello, world2');
+
+        //partial()创建偏函数，创建偏函数的目的是将原函数的某些参数固定住，可以降低新函数调用的难度。
+        //固定第一个参数,计算2的y次方
+        var pow2N = _.partial(Math.pow, 2);
+        console.log(pow2N(3)); //8
+        console.log(pow2N(5)); //32
+        //固定第二个参数，计算x的3次方
+        var cube = _.partial(Math.pow, _, 3);
+        console.log(cube(3)); //27
+        console.log(cube(5)); //125
+
+        //memoize()可以自动缓存函数计算结果
+        //一个阶乘运算  传统做法
+        function factorial(n) {
+            console.log('start calculate' + n + '!...');
+            var s = 1, i = n;
+            while (i > 1) {
+                s = s * i;
+                i --;
+            }
+            console.log(n + '! =' + s);
+            return s;
+        }
+        factorial(10); // 10! =3628800
+        //memoize()做法
+        var factorial = _.memoize(function (n) {
+            console.log('start calculate');
+            var s = 1, i = n;
+            while (i >= 1) {
+                s = s * i;
+                i --;
+            }
+            console.log(s);
+            return s;
+        })
+        factorial(5); // 120
+        factorial(5); //并没有重新计算，直接返回上次的缓存结果
+        //改进，递归调用
+        var fac = _.memoize(function (n) {
+            console.log('start calculate' + n + '!');
+            if (n < 2) {
+                return 1;
+            }
+            return n * fac(n - 1);
+        });
+        console.log(fac(5));
+        //        start calculate5!  Functions.html:55:13
+        //        start calculate4!  Functions.html:55:13
+        //        start calculate3!  Functions.html:55:13
+        //        start calculate2!  Functions.html:55:13
+        //        start calculate1!  Functions.html:55:13
+        //        120
+
+        //once()保证某个函数执行且仅执行一次。
+        var once = _.once(function () {
+            alert('Register ok!');
+        });
+        var onceClick = document.getElementById('#btn');
+        onceClick.addEventListener('click', once);
+
+        //delay()可以让一个函数延迟执行，效果和setTimeout()是一样的，但是代码明显简单了
+        //2s后调用alert
+        _.delay(alert('heheda'), 2000);
+        //延迟调用的函数有参数
+        _.delay(log, 2000, 'Hello,', ' World!');
+    </script>
+</body>
+</html>
